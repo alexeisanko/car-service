@@ -1,3 +1,65 @@
 from django.db import models
 
-# Create your models here.
+
+class Discounts(models.Model):
+    date = models.DateField(verbose_name='Дата')
+    size = models.IntegerField(verbose_name='Размер скидки')
+    is_active = models.BooleanField(verbose_name='Скидка активна?')
+
+    def __str__(self):
+        return f'{self.date} - {self.size} %'
+
+    class Meta:
+        verbose_name = 'Скидка'
+        verbose_name_plural = 'Скидки'
+
+
+class TypesOfServices(models.Model):
+    name = models.CharField(max_length=40, unique=True, verbose_name='Вид работы')
+    price = models.IntegerField(verbose_name='Стоимость')
+    fixed_repair_time = models.TimeField(verbose_name='Стандартное время выполнения работы')
+    is_available_to_client = models.BooleanField(verbose_name='Доступен для бронирования клиентом на сайте?')
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Вид работы'
+        verbose_name_plural = 'Виды работ'
+
+
+class StatusServices(models.Model):
+    name = models.CharField(max_length=40, unique=True, verbose_name='Статус работы')
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Статус работы'
+        verbose_name_plural = 'Статусы работ'
+
+
+class Events(models.Model):
+    car_id = models.ForeignKey('site_service.Cars', verbose_name='Модель машины', on_delete=models.PROTECT)
+    client_id = models.ForeignKey('site_service.Clients', verbose_name='Клиент', on_delete=models.PROTECT)
+    type_of_service_id = models.ForeignKey(TypesOfServices, verbose_name='Тип работы', on_delete=models.PROTECT)
+    status_id = models.ForeignKey(StatusServices, verbose_name='Статус работы', on_delete=models.PROTECT)
+    worker_id = models.ForeignKey('site_service.Workers',
+                                  verbose_name='Закрепленный работник',
+                                  on_delete=models.PROTECT,
+                                  null=True,
+                                  default=None
+                                  )
+    date_begin = models.DateTimeField(verbose_name='Начало работы')
+    date_finish_plan = models.DateTimeField(verbose_name='Плановое время окончания')
+    date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', null=True, default=None)
+    discount = models.IntegerField(verbose_name='Размер скидки')
+
+    def __str__(self):
+        return f'№{self.id} от {self.date_begin})'
+
+    class Meta:
+        verbose_name = 'Событие'
+        verbose_name_plural = 'События'
+
+
