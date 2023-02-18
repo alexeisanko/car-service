@@ -1,0 +1,3 @@
+/venv
+/.idea
+/car_service/db.sqlite3
