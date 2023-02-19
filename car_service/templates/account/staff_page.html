@@ -1,1 +1,12 @@
 {% extends 'base.html' %}
+
+{% block title %}
+    Страница персонала
+{% endblock title %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        <a href='/admin' ><button> Панель Администратора </button></a>
+    {% endif %}
+    <a href= {% url 'account:staff_logout' %}><button> Выйти из уч. записи </button></a>
+{% endblock content %}
