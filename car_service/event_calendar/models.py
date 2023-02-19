@@ -49,11 +49,12 @@ class Events(models.Model):
                                   on_delete=models.PROTECT,
                                   null=True,
                                   default=None
+
                                   )
     date_begin = models.DateTimeField(verbose_name='Начало работы')
     date_finish_plan = models.DateTimeField(verbose_name='Плановое время окончания')
     date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', null=True, default=None)
-    discount = models.IntegerField(verbose_name='Размер скидки')
+    discount = models.IntegerField(verbose_name='Размер скидки', null=True)
 
     def __str__(self):
         return f'№{self.id} от {self.date_begin})'

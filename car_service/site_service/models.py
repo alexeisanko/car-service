@@ -20,7 +20,7 @@ class Cars(models.Model):
     model = models.CharField(max_length=50, verbose_name='Модель машины')
     is_minibus = models.BooleanField(default=False)
     registration_number = models.CharField(max_length=10, verbose_name='Номер машины')
-    vin_number = models.CharField(max_length=100, verbose_name='VIN номер')
+    vin_number = models.CharField(max_length=100, verbose_name='VIN номер', blank=True)
 
     def __str__(self):
         return f'{self.model} ({self.registration_number})'

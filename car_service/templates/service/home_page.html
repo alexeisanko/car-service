@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Главная страница
@@ -8,12 +9,28 @@
     <a href= {% url 'account:staff_login' %}><button> Для персонала </button></a>
 
 {#  form check auto  #}
+    <div>
+        <h3 style="margin-top: 50px">Блок проверки авто</h3>
+        <form method="post" action="#" id="check_status_car">
+            {% csrf_token %}
+            <span>Проверь свое авто</span>
+            <input type="text" name="registration_number" value="Р152ВР11">
+            <input type="submit" value="Проверить">
+        </form>
+    </div>
 {#  end form check auto  #}
 
 {#  form booking  #}
+    <div>
+    <h3 style="margin-top: 70px">Блок бронирования</h3>
+
+    </div>
 {#  end form booking  #}
 {#  event calendar  #}
 {#  end event calendar  #}
 
 {% endblock content %}
 
+{% block script %}
+    <script src="{% static 'js/home_page.js' %}"></script>
+{%  endblock script %}
