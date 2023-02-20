@@ -9,6 +9,7 @@ def check_status_car(request):
     statuses = get_status_car(response['registration_number'])
     answer = ''
     for status in statuses:
-
         answer += f"{status.type_of_service_id} - {status.status_id}\n"
+    if answer == '':
+        answer = 'Такой машины у нас нет, проверьте правильность регистрационного номера'
     return JsonResponse({'statuses': answer})

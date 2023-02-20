@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class Discounts(models.Model):
@@ -17,7 +18,7 @@ class Discounts(models.Model):
 class TypesOfServices(models.Model):
     name = models.CharField(max_length=40, unique=True, verbose_name='Вид работы')
     price = models.IntegerField(verbose_name='Стоимость')
-    fixed_repair_time = models.TimeField(verbose_name='Стандартное время выполнения работы')
+    fixed_repair_time = models.IntegerField(verbose_name='Стандартное время выполнения работы в минутах')
     is_available_to_client = models.BooleanField(verbose_name='Доступен для бронирования клиентом на сайте?')
 
     def __str__(self):
@@ -40,6 +41,7 @@ class StatusServices(models.Model):
 
 
 class Events(models.Model):
+    created = models.DateTimeField(verbose_name='Время создания', auto_now_add=True)
     car_id = models.ForeignKey('site_service.Cars', verbose_name='Модель машины', on_delete=models.PROTECT)
     client_id = models.ForeignKey('site_service.Clients', verbose_name='Клиент', on_delete=models.PROTECT)
     type_of_service_id = models.ForeignKey(TypesOfServices, verbose_name='Тип работы', on_delete=models.PROTECT)
@@ -48,16 +50,15 @@ class Events(models.Model):
                                   verbose_name='Закрепленный работник',
                                   on_delete=models.PROTECT,
                                   null=True,
-                                  default=None
-
+                                  default=None,
                                   )
     date_begin = models.DateTimeField(verbose_name='Начало работы')
     date_finish_plan = models.DateTimeField(verbose_name='Плановое время окончания')
-    date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', null=True, default=None)
-    discount = models.IntegerField(verbose_name='Размер скидки', null=True)
+    date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', blank=True, null=True, default=None)
+    discount = models.IntegerField(verbose_name='Размер скидки', blank=True, default=0)
 
     def __str__(self):
-        return f'№{self.id} от {self.date_begin})'
+        return f'№{self.id} от {self.created.strftime("%d.%m.%Y")}'
 
     class Meta:
         verbose_name = 'Событие'
