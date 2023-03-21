@@ -1,38 +1,315 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-    Главная страница
-{%  endblock title %}
+{% block title %}Главная страница{%  endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home-page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+{% endblock style %}
 
 {% block content %}
-    <a href= {% url 'account:staff_login' %}><button> Для персонала </button></a>
+    <header class="header">
+        <div class="container">
+            <div class="header__info">
+                <div class="header__logo">
+                    <img src="{% static 'img/menu/logo.svg' %}" alt="ART-KAT">
+                    <div class="header__text">
+                        <p class="header__name">ART-KAT</p>
+                        <p class="header__desc">AUTOHUOLTO</p>
+                    </div>
+                </div>
+                <ul class="header__menu menu">
+                    <li class="menu__item">
+                        <a href="#">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Отзывы</a>
+                    </li>
+                </ul>
+                <div class="header__contact contact">
+                    <a href="tel:89999999999" class="contact__block">
+                        <span>8 (999) 999 99 99</span>
+                        <img src="{% static 'img/menu/mail.svg' %}" alt="phone">
+                    </a>
+                    <a href="mailto:example@example.com" class="contact__block">
+                        <span>example@example.com</span>
+                        <img src="{% static 'img/menu/phone.svg' %}" alt="mail">
+                    </a>
+                </div>
+                <div class="header__media">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="container">
+            <div class="hero__info">
+                <h1 class="hero__title title">Уход за автомобилем: <span class="blue title">быстро и честно</span></h1>
+                <p class="hero__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                    sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                <div class="hero__links">
+                    <div class="btn">Оставить заявку</div>
+                    <div class="btn btn--dark">Проверить статус</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="step">
+        <div class="container">
+            <h3 class="subtitle">Этапы работ</h3>
+            <h2 class="title">Как мы работаем?</h2>
+            <div class="step__content content">
+                <div class="step__stages stages">
+                    <div class="stages__step">
+                        <div class="step__num">01</div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                    </div>
+                    <div class="stages__step">
+                        <div class="step__num">02</div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                    </div>
+                    <div class="stages__step">
+                        <div class="step__num">03</div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                    </div>
+                    <div class="stages__step">
+                        <div class="step__num">04</div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                    </div>
+                </div>
+                <div class="step__status status">
+                    <form action="#" class="status__form">
+                        <div class="status__title title">Введите номер машины</div>
+                        <input type="text" class="status__number" placeholder="х999х11">
+                        <input type="submit" value="Проверить статус" class="btn btn--dark status__check">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cars"></section>
+    <section class="advantages">
+        <div class="container">
+            <h3 class="subtitle">Преимущества</h3>
+            <h2 class="title">Делаем ремонт авто простым и доступным</h2>
+            <div class="advantages__benefits">
+                <div class="advantages__item">
+                    <img src="{% static 'img/advantages/advantages-1.svg' %}" alt="Ремонт" class="advantages__img">
+                    <p class="advantages__title block-title">Ремонт в День обращения</p>
+                    <p class="advantages__text">Мы готовы принять в ремонт любой автомобиль в день обращения при наличии всех запасных частей и отремонтировать в кратчайшие сроки.</p>
+                </div>
+                <div class="advantages__item">
+                    <img src="{% static 'img/advantages/advantages-2.svg' %}" alt="Ремонт" class="advantages__img">
+                    <p class="advantages__title block-title">Ремонт автомобилей всех марок</p>
+                    <p class="advantages__text">Мы починим автомобиль любой марки, включая и негабаритные автомобили, такие как лимузины, автобусы и микроавтобусы.</p>
+                </div>
+                <div class="advantages__item">
+                    <img src="{% static 'img/advantages/advantages-3.svg' %}" alt="Мастера" class="advantages__img">
+                    <p class="advantages__title block-title">Высокая квалификация мастеров</p>
+                    <p class="advantages__text">Ваш автомобиль будет в руках профессионалов, опыт которых не менее 5 лет</p>
+                </div>
+                <div class="advantages__item">
+                    <img src="{% static 'img/advantages/advantages-4.svg' %}" alt="Оборудование" class="advantages__img">
+                    <p class="advantages__title block-title">Оборудование нового поколения</p>
+                    <p class="advantages__text">Мы используем новейшее оборудование, прошедшее проверку качества</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="services">
+        <div class="container">
+            <h3 class="subtitle">Предоставляемые услуги</h3>
+            <h2 class="title">Быстрый старт вашему автомобилю</h2>
+            <div class="services__content">
+                <div class="services__info">
+                    <p class="block-title">Техническое обслуживание</p>
+                    <div class="services__desc">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
+                        esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.</div>
+                    <div class="services__price">
+                        <span class="services__cost">от 1400р</span>
+                        <div class="btn btn--dark">Записаться</div>
+                    </div>
+                </div>
+                <div class="services__service">
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="team">
+        <div class="container">
+            <h3 class="subtitle">Наша команда</h3>
+            <h2 class="title">Мы починим!</h2>
+            <div class="team__slider owl-carousel owl-carousel-1 owl-theme">
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+                <div class="team__slide slide slide--dark">
+                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
+                    <p class="slide__title block-title">Jane Cooper</p>
+                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="entry">
+        <div class="container">
+            <h3 class="subtitle">Запись в автосервис</h3>
+            <h2 class="title">Сломалась машина? Приходите к нам!</h2>
+            <div class="entry__content">
+                <div class="entry__calendar calendar">
+                    <div class="calendar__select">
+                        <input list="service" placeholder="Выберите услугу">
+                        <datalist id="service">
+                            <option value="ТО">ТО</option>
+                            <option value="Что-то еще">Что-то еще</option>
+                        </datalist>
+                        <div style="display: block; width: 500px" id="calendar"></div>
+                    </div>
 
-{#  form check auto  #}
-    <div>
-        <h3 style="margin-top: 50px">Блок проверки авто</h3>
-        <form method="post" action="#" id="check_status_car">
-            {% csrf_token %}
-            <span>Проверь свое авто</span>
-            <input type="text" name="registration_number" value="Р152ВР11">
-            <input type="submit" value="Проверить">
-        </form>
-    </div>
-{#  end form check auto  #}
-
-{#  form booking  #}
-    <div>
-        <h3 style="margin-top: 70px">Блок бронирования</h3>
-        <div id="calendar" style="max-width: 600px;"></div>
-    </div>
-{#  end form booking  #}
-{#  event calendar  #}
-{#  end event calendar  #}
-
+                    <div class="calendar__form">
+                        <p class="block-title">Onko autosi sairas? Ryhdytään hommiin</p>
+                        <form action="#">
+                            <input type="text" placeholder="Введите ФИО">
+                            <input type="text" placeholder="Введите номер телефона">
+                            <input type="text" placeholder="Введите Email">
+                            <input type="text" placeholder="Введите модель машины">
+                            <input type="text" placeholder="Введите номер машины">
+                            <textarea cols="40" rows="10" placeholder="Оставьте комментарий"></textarea>
+                            <input type="submit" class="btn btn--dark" value="Записаться">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="rewievs">
+        <div class="container">
+            <h3 class="subtitle">Отзывы</h3>
+            <h2 class="title">Клиенты говорят</h2>
+            <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img">
+            <div class="rewievs__content owl-theme owl-carousel owl-carousel-2">
+                <div class="rewievs__slide slide slide--dark">
+                    <div class="slide__people">
+                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
+                        <div class="slide__info">
+                            <p class="slide__name">Jane Cooper</p>
+                            <span class="slide__service">Услуга</span>
+                        </div>
+                    </div>
+                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
+                </div>
+                <div class="rewievs__slide slide">
+                    <div class="slide__people">
+                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
+                        <div class="slide__info">
+                            <p class="slide__name">Jane Cooper</p>
+                            <span class="slide__service">Услуга</span>
+                        </div>
+                    </div>
+                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__info">
+                <div class="footer__phone">
+                    <a href="tel:89999999999" class="footer__number">8 (999) 999 99 99</a>
+                    <img src="{% static 'img/footer/phone.svg' %}" alt="phone">
+                </div>
+                <div class="footer__social">
+                    <a href="#"><img src="{% static 'img/footer/vk.svg' %}" alt="vk"></a>
+                    <a href="#"><img src="{% static 'img/footer/insta.svg' %}" alt="insta"></a>
+                    <a href="#"><img src="{% static 'img/footer/facebook.svg' %}" alt="facebook"></a>
+                </div>
+                <div class="footer__mail">
+                    <img src="{% static 'img/footer/mail.svg' %}" alt="mail">
+                    <a href="mailto:example@example.com" class="footer__mail">example@example.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock content %}
 
 {% block script %}
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/home_page.js' %}"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+    <script src="{% static 'js/home_page_api.js' %}"></script>
     <script src="{% static 'js/calendar_client.js' %}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
 {%  endblock script %}
