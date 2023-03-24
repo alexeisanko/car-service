@@ -7,10 +7,13 @@ $('.owl-carousel-1').owlCarousel({
         0: {
             items: 1
         },
-        650: {
+        600: {
             items: 2
         },
         1000: {
+            items: 3
+        },
+        1300: {
             items: 4
         }
     }
@@ -22,10 +25,16 @@ $('.owl-carousel-2').owlCarousel({
     dots: true,
     responsive: {
         0: {
-            items: 1
+            items: 1,
+            slideBy: 1,
+            mouseDrag: true,
+            touchDrag: true
         },
         1000: {
-            items: 2
+            items: 2,
+            slideBy: 2,
+            mouseDrag: false,
+            touchDrag: false
         }
     }
 })

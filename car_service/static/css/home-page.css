@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -41,7 +40,7 @@ a:hover {
 .header__logo {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .header__text {
   margin-left: 12px;
@@ -83,7 +82,7 @@ a:hover {
 .contact__block {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 .contact__block:not(:last-child) {
   margin-bottom: 10px;
@@ -110,7 +109,7 @@ a:hover {
 .hero__links {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .hero__links .btn--dark {
   margin-left: 15px;
@@ -169,7 +168,7 @@ a:hover {
 }
 .step .stages {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   flex-direction: column;
   justify-content: space-between;
   height: 490px;
@@ -220,6 +219,7 @@ a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-right: -65px;
 }
 .status__number {
   text-indent: 30px;
@@ -250,13 +250,17 @@ a:hover {
 .advantages {
   margin-top: 60px;
 }
+.advantages__item {
+  margin-top: 40px;
+}
 .advantages .title {
   max-width: 500px;
 }
 .advantages__benefits {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin-top: 70px;
 }
 .advantages__title {
@@ -289,7 +293,7 @@ a:hover {
 .services__price {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .services__cost {
   font-size: 24px;
@@ -369,7 +373,7 @@ a:hover {
 }
 .team .owl-carousel {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .team .owl-dot {
@@ -393,7 +397,7 @@ a:hover {
 }
 .team .owl-nav {
   width: 110%;
-  margin-left: -60px;
+  margin-left: -5%;
   margin-top: -150px !important;
   display: flex;
   align-items: center;
@@ -421,8 +425,7 @@ a:hover {
   margin-bottom: 20px;
   width: 60px !important;
   height: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 .team .slide__title {
@@ -431,6 +434,7 @@ a:hover {
 .team .slide__text {
   line-height: 22px;
   max-width: 236px;
+  margin: auto;
 }
 
 .entry {
@@ -494,6 +498,14 @@ a:hover {
   position: relative;
   margin-top: 100px;
 }
+.rewievs .owl-nav {
+  position: absolute;
+  bottom: 0;
+}
+.rewievs .owl-carousel .owl-stage-outer {
+  height: 425px !important;
+  padding-top: 100px;
+}
 .rewievs__img {
   position: absolute;
   top: 150px;
@@ -502,16 +514,31 @@ a:hover {
   right: 0;
   z-index: 4;
 }
+.rewievs__img_1 {
+  position: absolute;
+  top: -100px;
+  right: -25%;
+  width: 326px !important;
+  z-index: 1;
+}
 .rewievs__slide {
   padding-top: 33px;
   padding-bottom: 33px;
   padding-left: 47px;
+  padding-right: 20px;
   background-color: #4292B9;
   border-radius: 40px;
   position: relative;
+  overflow: visible;
+}
+.rewievs .owl-item:nth-child(2n) {
+  z-index: 200;
+}
+.rewievs .owl-item:nth-child(2n) .rewievs__img_1 {
+  display: none;
 }
 .rewievs__content {
-  margin-top: 170px;
+  margin-top: 80px;
 }
 .rewievs .slide--dark {
   background-color: #005484;
@@ -519,13 +546,12 @@ a:hover {
 .rewievs .slide__people {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .rewievs .slide__img {
   width: 60px !important;
   height: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
 }
 .rewievs .slide__name {
@@ -592,7 +618,7 @@ a:hover {
 .footer__phone, .footer__mail, .footer__social {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .footer__phone img, .footer__mail img, .footer__social img {
   margin-left: 10px;
@@ -603,13 +629,38 @@ a:hover {
   margin-right: 5px;
 }
 
+@media screen and (max-width: 1400px) {
+  .status__number {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1250px) {
+  .step__content {
+    flex-direction: column;
+  }
+  .status {
+    margin-top: 100px;
+  }
+  .status__form {
+    margin-right: auto;
+  }
+  .status__number {
+    width: 125%;
+  }
+}
 @media screen and (max-width: 1180px) {
+  .calendar__form {
+    width: 100% !important;
+  }
   .menu__item {
     margin-left: 10px;
     margin-right: 10px;
   }
 }
 @media screen and (max-width: 1100px) {
+  .cars {
+    background-size: 100% auto;
+  }
   .header {
     margin-bottom: 0;
   }
@@ -657,13 +708,39 @@ a:hover {
     background-size: 60% auto;
   }
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 900px) {
+  .rewievs__img_1 {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 723px) {
+  .step .stages__step:nth-child(3) {
+    top: 565px;
+  }
+}
+@media screen and (max-width: 702px) {
+  .step .stages__step:nth-child(2) {
+    top: 404px;
+  }
+}
+@media screen and (max-width: 670px) {
+  .container {
+    width: 90%;
+  }
   .title {
     font-size: 28px;
     line-height: 33px;
   }
+  .status__title {
+    font-size: 24px;
+  }
+  .hero {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
   .hero__title {
     margin-bottom: 0;
+    max-width: 320px;
   }
   .hero__text {
     font-size: 12px;
@@ -671,9 +748,90 @@ a:hover {
     line-height: 23px;
     margin-top: 15px;
     margin-bottom: 15px;
-    max-width: 90%;
+    max-width: 60%;
   }
   .hero__links {
+    align-items: flex-start;
     flex-direction: column;
   }
-}/*# sourceMappingURL=home-page.css.map */
+  .hero__links .btn--dark {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  .contact__block {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .contact__block span {
+    display: none;
+  }
+  .advantages__benefits {
+    margin-top: 0px;
+  }
+}
+@media screen and (max-width: 660px) {
+  .step .stages__step:last-child {
+    top: 730px;
+  }
+}
+@media screen and (max-width: 624px) {
+  .step .stages__step:first-child {
+    top: 295px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .owl-nav {
+    display: none !important;
+  }
+  .owl-dot {
+    margin-top: 25px !important;
+  }
+  .team__slider {
+    margin-top: 40px;
+  }
+  .cars {
+    padding: 0px 0 210px 0;
+  }
+  .status__number {
+    width: 100%;
+  }
+  .stages__step {
+    position: static !important;
+  }
+  .step {
+    background: none;
+  }
+  .step__content {
+    margin-top: 40px;
+  }
+  .footer__info {
+    flex-direction: column;
+  }
+  .footer__info div {
+    margin-bottom: 20px;
+  }
+  .footer__phone {
+    order: 2;
+  }
+  .footer__phone img {
+    order: 1;
+  }
+  .footer__phone a {
+    order: 2;
+  }
+  .footer__mail {
+    order: 3;
+  }
+  .footer__social {
+    order: 1;
+    margin-bottom: 10px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .hero__text {
+    max-width: 90%;
+  }
+  .rewievs__slide {
+    padding-left: 30px;
+  }
+}/*# sourceMappingURL=style.css.map */

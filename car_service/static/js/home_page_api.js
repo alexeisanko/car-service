@@ -1,8 +1,7 @@
 $(document).on("submit", "form", function () {
     let $form = $(this);
-
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: '/api/check_status/',
         dataType: 'json',
         data: $form.serialize(),
@@ -12,5 +11,3 @@ $(document).on("submit", "form", function () {
     })
     return false
 })
-
-

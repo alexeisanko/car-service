@@ -19,7 +19,8 @@ class TypesOfServices(models.Model):
     name = models.CharField(max_length=40, unique=True, verbose_name='Вид работы')
     price = models.IntegerField(verbose_name='Стоимость')
     fixed_repair_time = models.IntegerField(verbose_name='Стандартное время выполнения работы в минутах')
-    is_available_to_client = models.BooleanField(verbose_name='Доступен для бронирования клиентом на сайте?')
+    description = models.TextField(verbose_name='Описание работы', default="")
+    is_available_to_client = models.BooleanField(verbose_name='Доступен для бронирования клиентом на сайте?', default=False)
 
     def __str__(self):
         return f'{self.name}'
@@ -50,6 +51,7 @@ class Events(models.Model):
                                   verbose_name='Закрепленный работник',
                                   on_delete=models.PROTECT,
                                   null=True,
+                                  blank=True,
                                   default=None,
                                   )
     date_begin = models.DateTimeField(verbose_name='Начало работы')
