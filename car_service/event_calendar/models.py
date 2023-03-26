@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 
 class Discounts(models.Model):
@@ -20,7 +19,7 @@ class TypesOfServices(models.Model):
     price = models.IntegerField(verbose_name='Стоимость')
     fixed_repair_time = models.IntegerField(verbose_name='Стандартное время выполнения работы в минутах')
     description = models.TextField(verbose_name='Описание работы', default="")
-    is_available_to_client = models.BooleanField(verbose_name='Доступен для бронирования клиентом на сайте?', default=False)
+    is_available_to_client = models.BooleanField(verbose_name='Доступен для записи клиентом на сайте?', default=False)
 
     def __str__(self):
         return f'{self.name}'
@@ -54,9 +53,14 @@ class Events(models.Model):
                                   blank=True,
                                   default=None,
                                   )
+    lift_id = models.ForeignKey('site_service.Lifts',
+                                verbose_name='Закрепленный подъемник',
+                                on_delete=models.PROTECT,
+                                )
     date_begin = models.DateTimeField(verbose_name='Начало работы')
     date_finish_plan = models.DateTimeField(verbose_name='Плановое время окончания')
-    date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', blank=True, null=True, default=None)
+    date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', blank=True, null=True,
+                                            default=None)
     discount = models.IntegerField(verbose_name='Размер скидки', blank=True, default=0)
 
     def __str__(self):
@@ -65,5 +69,3 @@ class Events(models.Model):
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
-
-

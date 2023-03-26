@@ -1,5 +1,5 @@
 from django.contrib import admin
-from site_service.models import Clients, Cars, Workers
+from site_service.models import Clients, Cars, Workers, Lifts
 
 
 class CarsToClientsAdmin(admin.TabularInline):
@@ -22,6 +22,11 @@ class WorkersAdmin(admin.ModelAdmin):
     pass
 
 
+class LiftAdmin(admin.ModelAdmin):
+    list_display = ('name', 'is_available_to_client')
+
+
 admin.site.register(Clients, ClientsAdmin)
 admin.site.register(Cars, CarsAdmin)
 admin.site.register(Workers, WorkersAdmin)
+admin.site.register(Lifts, LiftAdmin)

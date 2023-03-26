@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from api.crud import get_status_car
 from django.views.decorators.http import require_POST, require_GET
-from api.utilities import find_free_times
+from api import utilities
 
 
 @require_GET
@@ -16,13 +16,19 @@ def check_status_car(request):
     return JsonResponse({'statuses': answer})
 
 
-@require_POST
+@require_GET
 def make_recording(request):
-    response = request.POST
+    response = request.GET
+    status = utilities.make_new_record(response)
+    return JsonResponse({'status': status})
 
 
 @require_GET
-def get_free_times(request):
+def get_free_place(request):
     response = request.GET
-    free_times = find_free_times(response['date'], response['type_service'])
+    free_places = utilities.find_free_place_for_work(response['date'], response['type_service'])
+    if free_places:
+        return JsonResponse({'status': 'ok', 'free_places': free_places})
+    else:
+        return JsonResponse({'status': 'error'})
 

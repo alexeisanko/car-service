@@ -39,3 +39,16 @@ class Workers(models.Model):
     class Meta:
         verbose_name = 'Рабочий'
         verbose_name_plural = 'Рабочие'
+
+
+class Lifts(models.Model):
+    name = models.CharField(max_length=40, verbose_name='Наименование подьемника', unique=True)
+    is_available_to_client = models.BooleanField(verbose_name='Доступен для записи клиентом на сайте?',
+                                                 default=False)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Подъемник'
+        verbose_name_plural = 'Подъемники'
