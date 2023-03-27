@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['alexeisanko-home.store', 'www.alexeisanko-home.store']
 
 
 # Application definition
@@ -59,7 +59,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,10 +80,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+NAME_DB = os.getenv('NAME_DB')
+USER_DB = os.getenv('USER_DB')
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+HOST_DB = os.getenv('HOST_DB')
+PORT_DB = os.getenv('PORT_DB')
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': NAME_DB,
+        'USER': USER_DB,
+        'PASSWORD': PASSWORD_DB,
+        'HOST': HOST_DB,
+        'PORT': PORT_DB,
     }
 }
 
@@ -125,7 +138,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     'static',
 ]
+STATIC_ROOT = os.getenv('STATIC_ROOT', 'static-prod/')
 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
