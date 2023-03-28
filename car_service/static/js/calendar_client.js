@@ -43,7 +43,7 @@ function GetRecordingCalendar(calendarEl) {
     start_recording.setDate(start_recording.getDate() + 1)
     let finish_recording = new Date()
     finish_recording.setDate(finish_recording.getDate() + 60)
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         initialDate: start_recording.toISOString().slice(0, 10),
         headerToolbar: {
@@ -128,6 +128,20 @@ $(document).ready(function () {
         if (types_service.includes($('#select-service').val())) {
             var calendarEl = document.getElementById('calendar');
             GetRecordingCalendar(calendarEl)
+        }
+    });
+
+    // Изменение типа машин
+    $('#checked-type-car').on('input', function (){
+        let old_value = $('#select-type-car')
+        if (old_value.text().trim() === 'Легковой') {
+            old_value.text('Минифургон')
+            $('#select-service').attr('list', 'service-minibus')
+            $('#select-service').val('')
+        } else {
+            old_value.text('Легковой')
+            $('#select-service').attr('list', 'service-car')
+            $('#select-service').val('')
         }
     });
 })

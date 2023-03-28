@@ -21,8 +21,13 @@ def get_events_on_day(year: int, month: int, day: int, lift_id, is_available_to_
     return events
 
 
-def get_all_lift(is_available_to_client=True):
-    lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client)
+def get_all_lift(type_service, is_available_to_client=True):
+    is_repair_for_minibus = TypesOfServices.objects.get(name=type_service).is_repair_for_minibus
+    if is_repair_for_minibus:
+        lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client).filter(
+            is_repair_for_minibus=is_repair_for_minibus)
+    else:
+        lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client).order_by('is_available_to_minibus')
     return lifts
 
 

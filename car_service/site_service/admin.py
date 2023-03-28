@@ -11,7 +11,7 @@ class ClientsAdmin(admin.ModelAdmin):
     inlines = [
         CarsToClientsAdmin
     ]
-    list_display = ('first_name', 'phone', 'email')
+    list_display = ('full_name', 'phone', 'email')
 
 
 class CarsAdmin(admin.ModelAdmin):

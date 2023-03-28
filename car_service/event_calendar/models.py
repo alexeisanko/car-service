@@ -17,9 +17,11 @@ class Discounts(models.Model):
 class TypesOfServices(models.Model):
     name = models.CharField(max_length=40, unique=True, verbose_name='Вид работы')
     price = models.IntegerField(verbose_name='Стоимость')
+    is_fixed_price = models.BooleanField(verbose_name='Фиксированная цена (не зависит от объемов)', default=True)
     fixed_repair_time = models.IntegerField(verbose_name='Стандартное время выполнения работы в минутах')
     description = models.TextField(verbose_name='Описание работы', default="")
     is_available_to_client = models.BooleanField(verbose_name='Доступен для записи клиентом на сайте?', default=False)
+    is_repair_for_minibus = models.BooleanField(verbose_name="Тип ремонта относиться к минифургонам?", default=False)
 
     def __str__(self):
         return f'{self.name}'

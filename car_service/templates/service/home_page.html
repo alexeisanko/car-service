@@ -70,18 +70,19 @@
                         <a href="#">Отзывы</a>
                     </li>
                 </ul>
-                <div class="header__contact contact">
-                    <a href="tel:89999999999" class="contact__block">
-                        <span>8 (999) 999 99 99</span>
-                        <img src="{% static 'img/menu/mail.svg' %}" alt="phone">
-                    </a>
-                    <a href="mailto:example@example.com" class="contact__block">
-                        <span>example@example.com</span>
-                        <img src="{% static 'img/menu/phone.svg' %}" alt="mail">
-                    </a>
-                </div>
+
+{#                <div class="header__contact contact">#}
+{#                    <a href="tel:89999999999" class="contact__block">#}
+{#                        <span>8 (999) 999 99 99</span>#}
+{#                        <img src="{% static 'img/menu/mail.svg' %}" alt="phone">#}
+{#                    </a>#}
+{#                    <a href="mailto:example@example.com" class="contact__block">#}
+{#                        <span>example@example.com</span>#}
+{#                        <img src="{% static 'img/menu/phone.svg' %}" alt="mail">#}
+{#                    </a>#}
+{#                </div>#}
                 <div class="header__auth">
-                    <span>Войти</span> <img src="assets/img/header/login.svg" alt="->">
+                    <span>Войти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
                 </div>
                 <div class="header__media">
                     <span></span>
@@ -249,13 +250,36 @@
             <div class="entry__content">
                 <div class="entry__calendar calendar">
                     <div class="calendar__select">
-                        <input id="select-service" list="service" placeholder="Выберите услугу">
-                        <datalist id="service">
-                            {% for type in type_service %}
-                                <option value="{{ type.name }}">{{ type.name }}</option>
-                            {% endfor %}
 
-                        </datalist>
+                        <div style="display: flex">
+                            <div style="margin-right: 40px">
+                                <h2 style="margin-bottom: 15px; text-align: center; font-size: 18px">Тип автомобиля</h2>
+                                <label class="form-switch">
+                                <input id="checked-type-car" type="checkbox">
+                                <i></i> <span id="select-type-car">Легковой</span></label>
+                            </div>
+                            <div>
+                                <input id="select-service" list="service-car" placeholder="Выберите услугу" style="margin-top: 12px">
+                                <datalist id="service-car">
+                                    {% for type in type_service_car %}
+                                        <option value="{{ type.name }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                                <datalist id="service-minibus">
+                                    {% for type in type_service_minibus %}
+                                        <option value="{{ type.name }}">{{ type.name }}</option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+
+
+{#                        <input id="select-service" list="service" placeholder="Выберите услугу">#}
+{#                        <datalist id="service">#}
+{#                            {% for type in type_service %}#}
+{#                                <option value="{{ type.name }}">{{ type.name }}</option>#}
+{#                            {% endfor %}#}
+{#                        </datalist>#}
                         <div id="calendar" style="width: 500px; margin-top: 15px"></div>
                     </div>
                     <div class="calendar__form">
