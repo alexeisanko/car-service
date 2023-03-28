@@ -48,3 +48,9 @@ $('.header__auth').click(function() {
 $('.modal__close').click(function() {
     $('.modal').removeClass('modal--visible');
 });
+$(".header, .hero__links").on("click", "a", function (event) {
+    event.preventDefault();
+    let id = $(this).attr('href'),
+        top = $(id).offset().top;
+    $('body,html').animate({scrollTop: top}, 1000);
+});
