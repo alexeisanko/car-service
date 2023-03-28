@@ -10,6 +10,22 @@
 {% endblock style %}
 
 {% block content %}
+    <div class="modal">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Авторизация</h3>
+            <form action="#" method="POST" class="form modal__form" novalidate="novalidate">
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Введите логин">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль">
+                </div>
+                <p class="input-reg">Еще не с нами? <span class="input-reg-link">Зарегистрируйтесь</span></p>
+                <button class="button btn--dark btn button--primary modal__button">Войти</button></form>
+            <!-- /.form modal__form -->
+        </div>
+        <!-- /.modal__dialog -->
+    </div>
     <header class="header">
         <div class="container">
             <div class="header__info">
@@ -37,6 +53,23 @@
                         <a href="#">Отзывы</a>
                     </li>
                 </ul>
+                <ul class="menu__media">
+                    <li class="menu__item">
+                        <a href="#">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Отзывы</a>
+                    </li>
+                </ul>
                 <div class="header__contact contact">
                     <a href="tel:89999999999" class="contact__block">
                         <span>8 (999) 999 99 99</span>
@@ -46,6 +79,9 @@
                         <span>example@example.com</span>
                         <img src="{% static 'img/menu/phone.svg' %}" alt="mail">
                     </a>
+                </div>
+                <div class="header__auth">
+                    <span>Войти</span> <img src="assets/img/header/login.svg" alt="->">
                 </div>
                 <div class="header__media">
                     <span></span>

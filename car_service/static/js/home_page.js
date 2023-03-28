@@ -7,7 +7,7 @@ $('.owl-carousel-1').owlCarousel({
         0: {
             items: 1
         },
-        700: {
+        600: {
             items: 2
         },
         1000: {
@@ -37,4 +37,14 @@ $('.owl-carousel-2').owlCarousel({
             touchDrag: false
         }
     }
-})
+});
+$('.header__media').click(function() {
+    $(this).toggleClass('header__media--active');
+    $('.menu__media').toggleClass('menu__media--active');
+});
+$('.header__auth').click(function() {
+    $('.modal').addClass('modal--visible');
+});
+$('.modal__close').click(function() {
+    $('.modal').removeClass('modal--visible');
+});
