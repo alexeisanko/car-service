@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'event_calendar.apps.EventCalendarConfig',
     'site_service.apps.SiteServiceConfig',
     'api.apps.ApiConfig',
+    'сustomization.apps.СustomizationConfig',
 ]
 
 MIDDLEWARE = [

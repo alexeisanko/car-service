@@ -70,12 +70,24 @@ function GetRecordingCalendar(calendarEl) {
 }
 
 $(document).ready(function () {
+    let phoneMask = IMask(
+        document.getElementById('phone'), {
+            mask: '+{358} (000) 000-00-00',
+
+        });
+
+    let numberCarMask = IMask(
+        document.getElementById('number'), {
+            mask: 'aa[a]-0[00]',
+
+        })
+
     class InfoRecord {
         constructor() {
             this.data = {
                 service: $('#select-service').val(),
                 name: $('#name').val(),
-                phone: $('#phone').val(),
+                phone: phoneMask.unmaskedValue,
                 email: $('#email').val(),
                 model: $('#model').val(),
                 number_car: $('#number').val(),
@@ -91,6 +103,10 @@ $(document).ready(function () {
                     return [false, `Incorrest type service.\nPlease take correct type service from list`]
                 } else if (this.data[key] == false && key != 'comment') {
                     return [false, `Please fill in the field ${key}`]
+                } else if (key === 'phone' && this.data[key].length != 13) {
+                    return [false, `Your phone incorrect `]
+                } else if (key === 'email' && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())) {
+                    return [false, `Your email incorrect `]
                 }
             }
             return [true, 'Test Passed']
@@ -103,6 +119,7 @@ $(document).ready(function () {
     }
 
     $('#make-record').click(function (e) {
+        console.log(phoneMask.unmaskedValue)
         e.preventDefault()
         let new_record = new InfoRecord()
         let is_checked = new_record.checkData()
@@ -132,7 +149,7 @@ $(document).ready(function () {
     });
 
     // Изменение типа машин
-    $('#checked-type-car').on('input', function (){
+    $('#checked-type-car').on('input', function () {
         let old_value = $('#select-type-car')
         if (old_value.text().trim() === 'Легковой') {
             old_value.text('Минифургон')
@@ -144,6 +161,10 @@ $(document).ready(function () {
             $('#select-service').val('')
         }
     });
+
+    $('#number').on('input', function (){
+        $('#number').val($('#number').val().toUpperCase())
+    })
 })
 
 function FreeTime(date, calendarEl) {

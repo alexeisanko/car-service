@@ -48,7 +48,7 @@ $('.header__auth').click(function() {
 $('.modal__close').click(function() {
     $('.modal').removeClass('modal--visible');
 });
-$(".header, .hero__links").on("click", "a", function (event) {
+$(".header, .hero__links .services__price").on("click", "a", function (event) {
     event.preventDefault();
     let id = $(this).attr('href'),
         top = $(id).offset().top;
