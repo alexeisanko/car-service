@@ -43,7 +43,7 @@ def get_free_times(year, month, day, lift_id, time_open, time_close):
 
 
 def make_new_record(data):
-    user_data = {'first_name': data['name'], 'phone': data['phone'], 'email': data['email']}
+    user_data = {'full_name': data['name'], 'phone': data['phone'], 'email': data['email']}
     client = crud.get_or_create_user(user_data)
     car_data = {'model': data['model'], 'registration_number': data['number_car'], 'client': client}
     car = crud.get_or_create_car(car_data)

@@ -866,6 +866,12 @@ a:hover {
     background: url("../img/hero/car-tablet.png") right bottom no-repeat;
     background-size: 60% auto;
   }
+  .entry__calendar{
+	flex-direction: column;
+  }
+  .calendar__form {
+	margin-top: 40px;
+  }
 }
 @media screen and (max-width: 900px) {
   .rewievs__img_1 {
@@ -997,6 +1003,21 @@ a:hover {
     order: 1;
     margin-bottom: 10px;
   }
+  #calendar {
+	width: 95%;
+  }
+  .fc-daygrid-body.fc-daygrid-body-unbalanced {
+	width: 100% !important;
+  }
+  .fc-col-header {
+	width: 100% !important;
+  }
+  #calendar {
+    width: 95% !important;
+  } 
+  .calendar__select {
+    width: 100%
+  }
 }
 @media screen and (max-width: 480px) {
   .services__service {
@@ -1040,6 +1061,10 @@ a:hover {
 
 
 
+
+.fc {
+    max-width: 100%
+}
 
 .form-switch {
   display: inline-block;

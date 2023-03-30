@@ -25,7 +25,7 @@ def get_all_lift(type_service, is_available_to_client=True):
     is_repair_for_minibus = TypesOfServices.objects.get(name=type_service).is_repair_for_minibus
     if is_repair_for_minibus:
         lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client).filter(
-            is_repair_for_minibus=is_repair_for_minibus)
+            is_available_to_minibus=is_repair_for_minibus)
     else:
         lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client).order_by('is_available_to_minibus')
     return lifts
@@ -38,7 +38,7 @@ def get_duration_service(type_service: str):
 
 def get_or_create_user(data):
     user, created = Clients.objects.get_or_create(phone=data['phone'],
-                                                  defaults={'first_name': data['first_name'], 'email': data['email']})
+                                                  defaults={'full_name': data['full_name'], 'email': data['email']})
     return user
 
 
