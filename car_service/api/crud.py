@@ -1,5 +1,6 @@
 from event_calendar.models import Events, TypesOfServices, StatusServices
 from site_service.models import Lifts, Clients, Cars
+from customization.models import DescriptionOfServices
 
 
 def get_status_car(registration_number: str) -> str:
@@ -67,3 +68,8 @@ def make_new_record(client, car, lift, start_time, end_time, type_service):
                                   date_finish_plan=end_time, status_id=status, type_of_service_id=type_service)
     event.save()
     return event
+
+
+def get_all_description_services():
+    description_services = DescriptionOfServices.objects.all()
+    return  description_services

@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class СustomizationConfig(AppConfig):
+class CustomizationConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'сustomization'
+    name = 'customization'
     verbose_name = 'Кастомизация сайта'

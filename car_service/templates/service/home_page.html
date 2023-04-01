@@ -174,23 +174,17 @@
             <h2 class="title">Быстрый старт вашему автомобилю</h2>
             <div class="services__content">
                 <div class="services__info">
-                    <p class="block-title">Техническое обслуживание</p>
-                    <div class="services__desc">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum. Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
-                        esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute id deserunt nisi.</div>
+                    <p id="title_service" class="block-title"></p>
+                    <div class="services__desc"></div>
                     <div class="services__price">
-                        <span class="services__cost">от 1400р</span>
+                        <span class="services__cost"></span>
                         <a href="#entry-scroll"><div class="btn btn--dark">Записаться</div></a>
                     </div>
                 </div>
                 <div class="services__service">
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
-                    <div class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    {% for service_id in custom_services_id %}
+                    <div id="custom_service_id{{ service_id.id }}" class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

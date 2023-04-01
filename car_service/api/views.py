@@ -32,3 +32,9 @@ def get_free_place(request):
     else:
         return JsonResponse({'status': 'error'})
 
+
+@require_GET
+def get_custom_service(request):
+    data = utilities.get_description()
+    return JsonResponse(data)
+

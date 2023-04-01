@@ -58,3 +58,11 @@ def _find_free_lift(start_time, end_time, type_service):
         if crud.is_free_lift(year, month, day, lift.id, start_time, end_time):
             return lift
     return 'error', 'free lift not found'
+
+
+def get_description():
+    all_services = crud.get_all_description_services()
+    processed_data = {
+        f'custom_service_id{x.id}': {'header': x.header, 'description': x.description, 'min_price': x.min_price} for x
+        in all_services}
+    return processed_data

@@ -5,70 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     GetRecordingCalendar(calendarEl)
 });
 
-function GetFreeTime(date, calendarEl, free_time) {
-
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'listDay',
-        initialDate: date,
-        customButtons: {
-            OpenCalendar: {
-                text: 'calendar',
-                click: function () {
-                    $('#start-time').attr('value', "")
-                    $('#end-time').attr('value', "")
-                    GetRecordingCalendar(calendarEl)
-                }
-            }
-        },
-        headerToolbar: {
-            left: 'title',
-            center: '',
-            right: 'OpenCalendar'
-        },
-        events: free_time,
-        eventClick: function (info) {
-            if (info.event.title === 'Свободно') {
-                $('.fc-list-event').css('backgroundColor', 'white')
-                info.el.style.backgroundColor = '#005484';
-                $('#start-time').attr('value', info.event.start.toISOString())
-                $('#end-time').attr('value', info.event.end.toISOString())
-            }
-        },
-    });
-    calendar.render();
-}
-
-function GetRecordingCalendar(calendarEl) {
-    let start_recording = new Date()
-    start_recording.setDate(start_recording.getDate() + 1)
-    let finish_recording = new Date()
-    finish_recording.setDate(finish_recording.getDate() + 60)
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        initialDate: start_recording.toISOString().slice(0, 10),
-        headerToolbar: {
-            left: 'today',
-            center: 'title',
-            right: 'prev,next'
-        },
-        events: [
-            {
-                start: start_recording.toISOString().slice(0, 10),
-                end: finish_recording.toISOString().slice(0, 10),
-                overlap: false,
-                display: 'inverse-background',
-            },
-        ],
-        eventColor: '#2c3e50',
-        dateClick: function (info) {
-            if (Date.parse(info.dateStr) >= Date.parse(start_recording.toISOString().slice(0, 10)) && Date.parse(info.dateStr) < Date.parse(finish_recording.toISOString().slice(0, 10))) {
-                FreeTime(info.dateStr, calendarEl)
-            }
-        },
-    });
-    calendar.render();
-}
-
 $(document).ready(function () {
     let phoneMask = IMask(
         document.getElementById('phone'), {
@@ -166,6 +102,70 @@ $(document).ready(function () {
         $('#number').val($('#number').val().toUpperCase())
     })
 })
+
+function GetFreeTime(date, calendarEl, free_time) {
+
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'listDay',
+        initialDate: date,
+        customButtons: {
+            OpenCalendar: {
+                text: 'calendar',
+                click: function () {
+                    $('#start-time').attr('value', "")
+                    $('#end-time').attr('value', "")
+                    GetRecordingCalendar(calendarEl)
+                }
+            }
+        },
+        headerToolbar: {
+            left: 'title',
+            center: '',
+            right: 'OpenCalendar'
+        },
+        events: free_time,
+        eventClick: function (info) {
+            if (info.event.title === 'Свободно') {
+                $('.fc-list-event').css('backgroundColor', 'white')
+                info.el.style.backgroundColor = '#005484';
+                $('#start-time').attr('value', info.event.start.toISOString())
+                $('#end-time').attr('value', info.event.end.toISOString())
+            }
+        },
+    });
+    calendar.render();
+}
+
+function GetRecordingCalendar(calendarEl) {
+    let start_recording = new Date()
+    start_recording.setDate(start_recording.getDate() + 1)
+    let finish_recording = new Date()
+    finish_recording.setDate(finish_recording.getDate() + 60)
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        initialDate: start_recording.toISOString().slice(0, 10),
+        headerToolbar: {
+            left: 'today',
+            center: 'title',
+            right: 'prev,next'
+        },
+        events: [
+            {
+                start: start_recording.toISOString().slice(0, 10),
+                end: finish_recording.toISOString().slice(0, 10),
+                overlap: false,
+                display: 'inverse-background',
+            },
+        ],
+        eventColor: '#2c3e50',
+        dateClick: function (info) {
+            if (Date.parse(info.dateStr) >= Date.parse(start_recording.toISOString().slice(0, 10)) && Date.parse(info.dateStr) < Date.parse(finish_recording.toISOString().slice(0, 10))) {
+                FreeTime(info.dateStr, calendarEl)
+            }
+        },
+    });
+    calendar.render();
+}
 
 function FreeTime(date, calendarEl) {
     let types_service = []
