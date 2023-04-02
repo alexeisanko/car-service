@@ -14,7 +14,7 @@ class DescriptionOfServices(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=40, verbose_name='Имя и фамилия')
     description = models.TextField(verbose_name='Описание сотрудника')
-    photo = models.ImageField(verbose_name='фото', upload_to='media/team')
+    photo = models.ImageField(verbose_name='фото', upload_to='team')
 
     class Meta:
         verbose_name = 'Команда'
@@ -23,8 +23,9 @@ class Team(models.Model):
 
 class Reviews(models.Model):
     name = models.CharField(max_length=40, verbose_name='Имя и фамилия')
+    type_service = models.CharField(max_length=30, verbose_name='Тип услуги')
     description = models.TextField(verbose_name='Описание отзыва')
-    photo = models.ImageField(verbose_name='фото', upload_to='media/reviews')
+    photo = models.ImageField(verbose_name='фото', upload_to='reviews')
 
     class Meta:
         verbose_name = 'Отзыв'

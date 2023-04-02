@@ -14,5 +14,7 @@ class HomePageView(TemplateView):
         context['type_service_minibus'] = TypesOfServices.objects.filter(is_available_to_client=True).filter(
             is_repair_for_minibus=True)
         context['custom_services_id'] = DescriptionOfServices.objects.all().values('id').order_by('id')
+        context['reviews'] = Reviews.objects.all()
+        context['team'] = Team.objects.all()
         return context
 # Create your views here.

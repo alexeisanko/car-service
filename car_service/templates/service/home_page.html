@@ -194,46 +194,21 @@
             <h3 class="subtitle">Наша команда</h3>
             <h2 class="title">Мы починим!</h2>
             <div class="team__slider owl-carousel owl-carousel-1 owl-theme">
-                <div class="team__slide slide">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                {% for worker in team %}
+                    {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 or forloop.counter == 7 or forloop.counter == 9 %}
+                        <div class="team__slide slide">
+                    <img src="{{ worker.photo.url }}" alt="" class="slide__img">
+                    <p class="slide__title block-title">{{ worker.name }}</p>
+                    <p class="slide__text">{{ worker.description }}</p>
                 </div>
-                <div class="team__slide slide slide--dark">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                    {% else %}
+                        <div class="team__slide slide slide--dark">
+                    <img src="{{ worker.photo.url }}" alt="" class="slide__img">
+                    <p class="slide__title block-title">{{ worker.name }}</p>
+                    <p class="slide__text">{{ worker.description }}</p>
                 </div>
-                <div class="team__slide slide">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
-                <div class="team__slide slide slide--dark">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
-                <div class="team__slide slide">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
-                <div class="team__slide slide slide--dark">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
-                <div class="team__slide slide">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
-                <div class="team__slide slide slide--dark">
-                    <img src="{% static 'img/team/people.png' %}" alt="" class="slide__img">
-                    <p class="slide__title block-title">Jane Cooper</p>
-                    <p class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -266,14 +241,6 @@
                                 </datalist>
                             </div>
                         </div>
-
-
-{#                        <input id="select-service" list="service" placeholder="Выберите услугу">#}
-{#                        <datalist id="service">#}
-{#                            {% for type in type_service %}#}
-{#                                <option value="{{ type.name }}">{{ type.name }}</option>#}
-{#                            {% endfor %}#}
-{#                        </datalist>#}
                         <div id="calendar" style="width: 500px; margin-top: 15px"></div>
                     </div>
                     <div class="calendar__form">
@@ -302,51 +269,35 @@
             <h2 class="title">Клиенты говорят</h2>
             <!-- <img src="assets/img/rewievs/tires.png" alt="tires" class="rewievs__img"> -->
             <div class="rewievs__content owl-theme owl-carousel owl-carousel-2">
-                <div class="rewievs__slide slide slide--dark">
+                {% for review in reviews %}
+                    {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 or forloop.counter == 7 or forloop.counter == 9 %}
+                        <div class="rewievs__slide slide slide--dark">
                     <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
                     <div class="slide__people">
-                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
+                        <img src="{{ review.photo.url }}" alt="people" class="slide__img">
                         <div class="slide__info">
-                            <p class="slide__name">Jane Cooper</p>
-                            <span class="slide__service">Услуга</span>
+                            <p class="slide__name">{{ review.name }}</p>
+                            <span class="slide__service">{{ review.type_service }}</span>
                         </div>
                     </div>
-                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
+                    <div class="slide__text">{{ review.description }}</div>
                 </div>
-                <div class="rewievs__slide slide">
+                    {% else %}
+                        <div class="rewievs__slide slide">
                     <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
                     <div class="slide__people">
-                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
+                        <img src="{{ review.photo.url }}" alt="people" class="slide__img">
                         <div class="slide__info">
-                            <p class="slide__name">Jane Cooper</p>
-                            <span class="slide__service">Услуга</span>
+                            <p class="slide__name">{{ review.name }}</p>
+                            <span class="slide__service">{{ review.type_service }}</span>
                         </div>
                     </div>
-                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
+                    <div class="slide__text">{{ review.description }}</div>
                 </div>
-                <div class="rewievs__slide slide--dark">
-                    <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
-                    <div class="slide__people">
-                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
-                        <div class="slide__info">
-                            <p class="slide__name">Jane Cooper</p>
-                            <span class="slide__service">Услуга</span>
-                        </div>
-                    </div>
-                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
-                </div>
-                <div class="rewievs__slide slide">
-                    <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
-                    <div class="slide__people">
-                        <img src="{% static 'img/team/people.png' %}" alt="people" class="slide__img">
-                        <div class="slide__info">
-                            <p class="slide__name">Jane Cooper</p>
-                            <span class="slide__service">Услуга</span>
-                        </div>
-                    </div>
-                    <div class="slide__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
+
         </div>
     </section>
     <footer class="footer">
