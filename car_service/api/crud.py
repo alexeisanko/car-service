@@ -22,7 +22,24 @@ def get_events_on_day(year: int, month: int, day: int, lift_id, is_available_to_
     return events
 
 
-def get_all_lift(type_service, is_available_to_client=True):
+def get_all_events(lift_id):
+    events = Events.objects.filter(lift_id=lift_id)
+    return events
+
+
+def get_one_event(id_event):
+    event = Events.objects.get(id=int(id_event))
+    return event
+
+
+def get_lifts(type_service=None, is_available_to_client=True, lift='all', for_staff=False):
+    if for_staff:
+        if lift == 'all':
+            lifts = Lifts.objects.all()
+        else:
+            lifts = Lifts.objects.filter(id=int(lift))
+        return lifts
+
     is_repair_for_minibus = TypesOfServices.objects.get(name=type_service).is_repair_for_minibus
     if is_repair_for_minibus:
         lifts = Lifts.objects.filter(is_available_to_client=is_available_to_client).filter(
@@ -72,4 +89,4 @@ def make_new_record(client, car, lift, start_time, end_time, type_service):
 
 def get_all_description_services():
     description_services = DescriptionOfServices.objects.all()
-    return  description_services
+    return description_services

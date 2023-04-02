@@ -38,3 +38,16 @@ def get_custom_service(request):
     data = utilities.get_description()
     return JsonResponse(data)
 
+
+@require_GET
+def get_events(request):
+    response = request.GET
+    events = utilities.get_events(response['lift'])
+    return JsonResponse(events)
+
+
+@require_GET
+def get_select_event(request):
+    response = request.GET
+    event = utilities.get_event(response['id_event'])
+    return JsonResponse(event)

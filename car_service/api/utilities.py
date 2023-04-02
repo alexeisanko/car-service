@@ -8,7 +8,7 @@ def find_free_place_for_work(date: str, type_service: str) -> dict:
     time_open = int(datetime(year, month, day, open_hour).timestamp())
     time_close = int(datetime(year, month, day, close_hour).timestamp())
     duration_of_work = crud.get_duration_service(type_service) * 60
-    lifts = crud.get_all_lift(type_service)
+    lifts = crud.get_lifts(type_service)
     free_places = []
     for lift in lifts:
         free_times = get_free_times(year, month, day, lift.id, time_open, time_close)
@@ -52,7 +52,7 @@ def make_new_record(data):
 
 
 def _find_free_lift(start_time, end_time, type_service):
-    lifts = crud.get_all_lift(type_service)
+    lifts = crud.get_lifts(type_service)
     year, month, day = int(start_time[0: 4]), int(start_time[5: 7]), int(start_time[8: 10])
     for lift in lifts:
         if crud.is_free_lift(year, month, day, lift.id, start_time, end_time):
@@ -66,3 +66,30 @@ def get_description():
         f'custom_service_id{x.id}': {'header': x.header, 'description': x.description, 'min_price': x.min_price} for x
         in all_services}
     return processed_data
+
+
+def get_events(lift_number: str):
+    lift_id = lift_number if lift_number == 'all' else lift_number.split('_')[1]
+    lifts = crud.get_lifts(for_staff=True, lift=lift_id)
+    events = []
+    colors = ['blue', 'green', 'read', 'brown', 'purple', 'yellow', 'black', 'pink']
+    for i, lift in enumerate(lifts):
+        lift_events = crud.get_all_events(lift.id)
+        events.extend(
+            [{'title': event.type_of_service_id.name,
+              'start': event.date_begin.isoformat(),
+              'end': event.date_finish_plan.isoformat(),
+              'color': colors[i],
+              'id_event': event.id} for
+             event in lift_events])
+    return {'status': 'ok', 'events': events}
+
+
+def get_event(id_event):
+    event = crud.get_one_event(id_event)
+    clean_event = {'client': event.client_id.full_name,
+                   'car': event.car_id.model,
+                   'service': event.type_of_service_id.name,
+                   'start': event.date_begin,
+                   'end': event.date_finish_plan}
+    return clean_event
