@@ -1,0 +1,175 @@
+{% extends 'service/home_page.html' %}
+{% load static %}
+
+{% block title %}
+    Страница пользователя
+{% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/account/clients.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home-page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+{% endblock style %}
+
+{% block content %}
+<header class="header">
+        <div class="container">
+            <div class="header__info">
+                <div class="header__logo">
+                    <img src="{% static 'img/menu/logo.svg' %}" alt="ART-KAT">
+                    <div class="header__text">
+                        <p class="header__name">ART-KAT</p>
+                        <p class="header__desc">AUTOHUOLTO</p>
+                    </div>
+                </div>
+                <ul class="header__menu menu">
+                    <li class="menu__item">
+                        <a href="#">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Отзывы</a>
+                    </li>
+                </ul>
+                <ul class="menu__media">
+                    <li class="menu__item">
+                        <a href="#">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#">Отзывы</a>
+                    </li>
+                </ul>
+                <div class="header__auth">
+                    <span>Выйти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
+                </div>
+                <div class="header__media">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="personal">
+            <div class="container">
+                <div class="name personal__name">
+                    <h2>Алексей</h2>
+                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
+                </div>
+                <div class="personal__info info">
+                    <div class="info__item">
+                        <span class="info__title">Телефон</span>
+                        <span class="info__text">8 (800) 555-35-35</span>
+                    </div>
+                    <div class="info__item">
+                        <span class="info__title">Почта</span>
+                        <span class="info__text">example@yandex.ru</span>
+                    </div>
+                </div>
+                <div class="user-cars">
+                    <h3 class="subtitle">Мои машины</h3>
+                    <h2 class="title">Тут какая-то крутая фраза</h2>
+                    <div class="info-cars">
+                        <div class="info-cars__add">
+                            <img src="{% static 'img/user/plus.svg' %}" alt="+">
+                            <span>Добавить машину</span>
+                        </div>
+                        <div class="car">
+                            <div class="car__info">
+                                <p class="car__title">Hyundai Solaris (м153ро)</p>
+                                <div class="car__btns">
+                                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
+                                    <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
+                                </div>
+                                <div class="car__status orange">В работе</div>
+                            </div>
+                            <div class="car__vin">VIN: 12345678301234756</div>
+                        </div>
+                        <div class="car">
+                            <div class="car__info">
+                                <p class="car__title">Renault Duster (a52op)</p>
+                                <div class="car__btns">
+                                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
+                                    <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
+                                </div>
+                                <div class="car__status green">Готова</div>
+                            </div>
+                            <div class="car__vin">VIN: 67830123475612345</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="works">
+            <div class="container">
+                <h3 class="subtitle">Предоставленные услуги</h3>
+                <h2 class="title">Мы с вами уже виделись!</h2>
+                <table class="works__table table" border="1">
+                    <tr>
+                        <th>Дата поступления</th>
+                        <th>Дата выдачи</th>
+                        <th>Фронт работ</th>
+                        <th>Стоимость</th>
+                    </tr>
+                    <tr>
+                        <td>11.05.2022</td>
+                        <td>15.05.2022</td>
+                        <td>Замена масла в коробке и раздатке</td>
+                        <td>500р</td>
+                    </tr>
+                    <tr>
+                        <td>11.05.2022</td>
+                        <td>15.05.2022</td>
+                        <td>ТО</td>
+                        <td>1000р</td>
+                    </tr>
+                    <tr>
+                        <td>11.05.2022</td>
+                        <td>15.05.2022</td>
+                        <td>Замена шаровых опор</td>
+                        <td>1500р</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__info">
+                <div class="footer__phone">
+                    <a href="tel:89999999999" class="footer__number">8 (999) 999 99 99</a>
+                    <img src="{% static 'img/footer/phone.svg' %}" alt="phone">
+                </div>
+                <div class="footer__social">
+                    <a href="#"><img src="{% static 'img/footer/vk.svg' %}" alt="vk"></a>
+                    <a href="#"><img src="{% static 'img/footer/insta.svg' %}" alt="insta"></a>
+                    <a href="#"><img src="{% static 'img/footer/facebook.svg' %}" alt="facebook"></a>
+                </div>
+                <div class="footer__mail">
+                    <img src="{% static 'img/footer/mail.svg' %}" alt="mail">
+                    <a href="mailto:example@example.com" class="footer__mail">example@example.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock content %}
+

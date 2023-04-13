@@ -12,7 +12,10 @@ class StaffPageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['lifts'] = Lifts.objects.all()
         return context
-
+        
+        
+class StaffUserView(TemplateView):
+    template_name = 'account/user_page.html'
 
 class StaffLoginView(LoginView):
     template_name = 'account/staff_login.html'
