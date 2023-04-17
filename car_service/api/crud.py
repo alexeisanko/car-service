@@ -1,5 +1,6 @@
 from event_calendar.models import Events, TypesOfServices, StatusServices
 from site_service.models import Lifts, Clients, Cars
+from account.models import MyUser
 from customization.models import DescriptionOfServices
 
 
@@ -55,8 +56,12 @@ def get_duration_service(type_service: str):
 
 
 def get_or_create_user(data):
-    user, created = Clients.objects.get_or_create(phone=data['phone'],
-                                                  defaults={'full_name': data['full_name'], 'email': data['email']})
+    if MyUser.objects.filter(email=data['email']):
+        user, created = Clients.objects.get_or_create(phone=data['phone'],
+                                                      defaults={'full_name': data['full_name'], 'email': data['email']})
+    else:
+        user, created = Clients.objects.get_or_create(phone=data['phone'],
+                                                      defaults={'full_name': data['full_name'], 'email': data['email']})
     return user
 
 

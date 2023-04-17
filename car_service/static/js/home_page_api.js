@@ -1,4 +1,5 @@
-$(document).on("submit", "form", function () {
+
+$('#status-scroll').on("submit", "form", function () {
     // let $form = $(this);
    let number = $('.status__number').val()
     $.ajax({
@@ -9,6 +10,20 @@ $(document).on("submit", "form", function () {
         // data: $form.serialize(),
         success: function (data) {
             alert(data['statuses'])
+        },
+    })
+    return false
+})
+
+$('.modal').on("submit", "form", function () {
+    let $form = $(this);
+    $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        dataType: 'json',
+        data: $form.serialize(),
+        success: function (data) {
+            console(data)
         },
     })
     return false

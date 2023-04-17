@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
 from event_calendar.models import Events
 from site_service.models import Lifts
@@ -12,16 +12,17 @@ class StaffPageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['lifts'] = Lifts.objects.all()
         return context
-        
-        
-class StaffUserView(TemplateView):
+
+
+class UserPageView(TemplateView):
     template_name = 'account/user_page.html'
 
-class StaffLoginView(LoginView):
-    template_name = 'account/staff_login.html'
-    next_page = reverse_lazy('account:staff')
-    redirect_authenticated_user = True
 
-
-class StaffLogoutView(LogoutView):
-    next_page = reverse_lazy('home_page')
+def login_all_user(request):
+    email = request.POST['email']
+    password = request.POST['password']
+    user = authenticate(username=email, password=password)
+    if user is not None:
+        login(request, user)
+        return
+    return

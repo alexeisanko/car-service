@@ -13,12 +13,12 @@
     <div class="modal">
         <div class="modal__dialog"><button class="modal__close"></button>
             <h3 class="modal__title">Авторизация</h3>
-            <form action="#" method="POST" class="form modal__form" novalidate="novalidate">
+            <form action="{% url "account:login" %}#" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Введите логин">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль">
+                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">
                 </div>
                 <p class="input-reg">Еще не с нами? <span class="input-reg-link">Зарегистрируйтесь</span></p>
                 <button class="button btn--dark btn button--primary modal__button">Войти</button></form>
