@@ -82,7 +82,7 @@ $(document).ready(function () {
         $(this).css('background-color', '#4292B9')
 
     })
-    $(".header, .hero__links .services__price").on("click", "a", function (event) {
+    $(".header__menu, .menu__media, .hero__links, .services__price").on("click", "a", function (event) {
         event.preventDefault();
         let id = $(this).attr('href'),
             top = $(id).offset().top;

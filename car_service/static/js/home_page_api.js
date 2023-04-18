@@ -23,7 +23,7 @@ $('.modal').on("submit", "form", function () {
         dataType: 'json',
         data: $form.serialize(),
         success: function (data) {
-            console(data)
+            location.replace(data['next_page'])
         },
     })
     return false

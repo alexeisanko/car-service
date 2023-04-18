@@ -52,6 +52,10 @@ class MyUser(AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = "Пользователи"
+
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always

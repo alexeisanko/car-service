@@ -13,7 +13,7 @@
 {% endblock style %}
 
 {% block content %}
-<header class="header">
+    <header class="header">
         <div class="container">
             <div class="header__info">
                 <div class="header__logo">
@@ -57,9 +57,11 @@
                         <a href="#">Отзывы</a>
                     </li>
                 </ul>
-                <div class="header__auth">
-                    <span>Выйти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
-                </div>
+                <a href="{% url 'account:logout' %}">
+                    <div class="header__auth">
+                        <span>Выйти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
+                    </div>
+                </a>
                 <div class="header__media">
                     <span></span>
                     <span></span>
@@ -78,11 +80,11 @@
                 <div class="personal__info info">
                     <div class="info__item">
                         <span class="info__title">Телефон</span>
-                        <span class="info__text">8 (800) 555-35-35</span>
+                        <span class="info__text">{{ client.phone }}</span>
                     </div>
                     <div class="info__item">
                         <span class="info__title">Почта</span>
-                        <span class="info__text">example@yandex.ru</span>
+                        <span class="info__text">{{ client.email }}</span>
                     </div>
                 </div>
                 <div class="user-cars">
@@ -93,28 +95,19 @@
                             <img src="{% static 'img/user/plus.svg' %}" alt="+">
                             <span>Добавить машину</span>
                         </div>
-                        <div class="car">
-                            <div class="car__info">
-                                <p class="car__title">Hyundai Solaris (м153ро)</p>
-                                <div class="car__btns">
-                                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
-                                    <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
+                        {% for car in cars %}
+                            <div class="car">
+                                <div class="car__info">
+                                    <p class="car__title">{{ car.model }} ({{ car.registration_number }})</p>
+                                    <div class="car__btns">
+                                        <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
+                                        <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
+                                    </div>
+                                    <div class="car__status orange">В работе</div>
                                 </div>
-                                <div class="car__status orange">В работе</div>
+                                <div class="car__vin">VIN: {{ car.vin_number|default_if_none:'Не указана' }}</div>
                             </div>
-                            <div class="car__vin">VIN: 12345678301234756</div>
-                        </div>
-                        <div class="car">
-                            <div class="car__info">
-                                <p class="car__title">Renault Duster (a52op)</p>
-                                <div class="car__btns">
-                                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
-                                    <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
-                                </div>
-                                <div class="car__status green">Готова</div>
-                            </div>
-                            <div class="car__vin">VIN: 67830123475612345</div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -124,31 +117,77 @@
                 <h3 class="subtitle">Предоставленные услуги</h3>
                 <h2 class="title">Мы с вами уже виделись!</h2>
                 <table class="works__table table" border="1">
-                    <tr>
-                        <th>Дата поступления</th>
-                        <th>Дата выдачи</th>
-                        <th>Фронт работ</th>
-                        <th>Стоимость</th>
-                    </tr>
-                    <tr>
-                        <td>11.05.2022</td>
-                        <td>15.05.2022</td>
-                        <td>Замена масла в коробке и раздатке</td>
-                        <td>500р</td>
-                    </tr>
-                    <tr>
-                        <td>11.05.2022</td>
-                        <td>15.05.2022</td>
-                        <td>ТО</td>
-                        <td>1000р</td>
-                    </tr>
-                    <tr>
-                        <td>11.05.2022</td>
-                        <td>15.05.2022</td>
-                        <td>Замена шаровых опор</td>
-                        <td>1500р</td>
-                    </tr>
+                    {% if events %}
+                        <tr>
+                            <th>Дата начала работ</th>
+                            <th>Дата окончания</th>
+                            <th>Фронт работ</th>
+                            <th>Стоимость</th>
+                        </tr>
+                    {% endif %}
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.date_begin }}</td>
+                            <td>{{ event.date_finish_fact|default_if_none:'Еще на ремонте' }}</td>
+                            <td>{{ event.type_of_service_id }}</td>
+                            <td>{{ event.type_of_service_id.price }}р</td>
+                        </tr>
+                    {% endfor %}
                 </table>
+            </div>
+        </section>
+        <section class="entry" id="entry-scroll">
+            <div class="container">
+                <h3 class="subtitle">Запись в автосервис</h3>
+                <h2 class="title">Сломалась машина? Приходите к нам!</h2>
+                <div class="entry__content">
+                    <div class="entry__calendar calendar">
+                        <div class="calendar__select">
+
+                            <div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start">
+                                <div style="margin-right: 40px">
+                                    <h2 style="margin-bottom: 15px; text-align: center; font-size: 18px">Тип
+                                        автомобиля</h2>
+                                    <label class="form-switch">
+                                        <input id="checked-type-car" type="checkbox">
+                                        <i></i> <span id="select-type-car">Легковой</span></label>
+                                </div>
+                                <div>
+                                    <input id="select-service" list="service-car" placeholder="Выберите услугу"
+                                           style="margin-top: 12px">
+                                    <datalist id="service-car">
+                                        {% for type in type_service_car %}
+                                            <option value="{{ type.name }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <datalist id="service-minibus">
+                                        {% for type in type_service_minibus %}
+                                            <option value="{{ type.name }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="calendar" style="width: 500px; margin-top: 15px"></div>
+                        </div>
+                        <div class="calendar__form">
+                            <p class="block-title">Onko autosi sairas? Ryhdytään hommiin</p>
+                            <form action="#">
+                                <input id="name" type="text" placeholder="Введите ФИО">
+                                <input id="phone" type="text" placeholder="Введите номер телефона">
+                                <input id="email" type="text" placeholder="Введите Email">
+                                <input id="model" type="text" placeholder="Введите модель машины">
+                                <input id="number" type="text" placeholder="Введите номер машины">
+                                <textarea id="comment" cols="40" rows="10"
+                                          placeholder="Оставьте комментарий"></textarea>
+                                <input id="start-time" type="hidden">
+                                <input id="end-time" type="hidden">
+                                {% csrf_token %}
+                                <input id="make-record" type="submit" class="btn btn--dark" value="Записаться">
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
