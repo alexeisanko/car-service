@@ -59,11 +59,20 @@ $(document).ready(function () {
         $('.menu__media').toggleClass('menu__media--active');
     });
     $('.header__auth').click(function() {
-        $('.modal').addClass('modal--visible');
+        $('.modal__login').addClass('modal--visible');
     });
     $('.modal__close').click(function() {
         $('.modal').removeClass('modal--visible');
     });
+    $('.input-reg-link').click(function() {
+        $('.modal__login').removeClass('modal--visible');
+        $('.modal__registration').addClass('modal--visible');
+    });
+    $('.input-login-link').click(function() {
+        $('.modal__registration').removeClass('modal--visible');
+        $('.modal__login').addClass('modal--visible');
+    });
+    
     $('.services__icon').click(function (){
         let service_id = $(this).attr('id')
         $('#title_service').text(custom_services[service_id]['header'])

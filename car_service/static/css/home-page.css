@@ -84,6 +84,16 @@ a:hover {
 .modal .input-reg-link:hover {
   text-decoration: underline;
 }
+.modal .input-login-link {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #4292B9;
+  transition: text-decoration 0.2s;
+}
+.modal .input-login-link:hover {
+  text-decoration: underline;
+}
 .modal button {
   margin: auto;
   display: block;
