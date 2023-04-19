@@ -4,6 +4,7 @@ from django.contrib.auth.views import LogoutView
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
+from django.contrib import messages
 from account.forms import LoginForm, RegistrationForm
 from account import utilities
 from site_service.models import Lifts, Clients, Cars
@@ -41,6 +42,7 @@ def login_user(request):
                 return JsonResponse({'next_page': redirect('account:staff').url})
             else:
                 return JsonResponse({'next_page': redirect('account:user').url})
+        return JsonResponse({'error': 'invalid email or password'})
 
 
 def registration_user(request):
@@ -51,7 +53,19 @@ def registration_user(request):
                                          form.cleaned_data['phone'],
                                          form.cleaned_data['password']
                                          )
-        return JsonResponse({'next_page': redirect('account:user').url})
+        utilities.activate_email(request, user, form.cleaned_data['email'], form.cleaned_data['full_name'])
+        return JsonResponse({'registration ok': "Проверь почту"})
+    else:
+        return JsonResponse({'error': "invalid data"})
+
+
+def confirm_user(request, uidb64, token):
+    is_confirm_email = utilities.activate_user(uidb64, token)
+    if is_confirm_email:
+        messages.success(request, "Thank you for your email confirmation. Now you can login your account.")
+    else:
+        messages.error(request, "Activation link is invalid!")
+    return redirect('home_page')
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):

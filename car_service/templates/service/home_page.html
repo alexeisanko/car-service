@@ -29,7 +29,7 @@
     <div class="modal modal__registration">
         <div class="modal__dialog"><button class="modal__close"></button>
             <h3 class="modal__title">Регистрация</h3>
-            <form action="{% url 'account:registration' %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+            <form action="{% url 'account:register' %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
                     <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
                 </div>
@@ -37,7 +37,7 @@
                     <input type="text" class="input form__input modal__input input--light" placeholder="Ваше имя" name="full_name">
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер телефона" name="phone">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер телефона" name="phone" id="register-phone">
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">

@@ -23,7 +23,14 @@ $('.modal').on("submit", "form", function () {
         dataType: 'json',
         data: $form.serialize(),
         success: function (data) {
-            location.replace(data['next_page'])
+            if (data['error']) {
+                alert(data['error'])
+            } else if (data['next_page']){
+                location.replace(data['next_page'])
+            } else if (data['registration ok']) {
+                $('.modal').removeClass('modal--visible')
+                alert(data['registration ok'])
+            }
         },
     })
     return false

@@ -11,6 +11,11 @@ $(document).ready(function () {
             mask: '+{358} (000) 000-00-00',
 
         });
+    let phoneregisterMask = IMask(
+        document.getElementById('register-phone'), {
+            mask: '+{358} (000) 000-00-00',
+
+        });
 
     let numberCarMask = IMask(
         document.getElementById('number'), {
