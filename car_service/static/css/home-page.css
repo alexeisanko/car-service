@@ -166,6 +166,10 @@ a:hover {
   font-weight: 600;
   cursor: pointer;
 }
+.header__media {
+    display: none;
+
+  }
 
 .menu {
   max-width: 625px;
@@ -864,7 +868,7 @@ a:hover {
     margin: auto;
   }
   .header__media {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     cursor: pointer;
   }
