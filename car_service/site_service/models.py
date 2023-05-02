@@ -3,7 +3,7 @@ from django.db import models
 
 class Clients(models.Model):
     full_name = models.CharField(max_length=40, verbose_name='Имя')
-    phone = models.CharField(unique=True, verbose_name='Номер телефона', max_length=15)
+    phone = models.CharField(unique=True, verbose_name='Номер телефона', max_length=21)
     email = models.EmailField(max_length=254, unique=True)
     note = models.TextField(verbose_name="Примечание", blank=True, null=True)
 

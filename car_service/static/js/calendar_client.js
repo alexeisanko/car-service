@@ -23,6 +23,11 @@ $(document).ready(function () {
 
         })
 
+    let addnumberCarMask = IMask(
+        document.getElementById('add-number-car'), {
+            mask: 'aa[a]-0[00]',
+
+        })
     class InfoRecord {
         constructor() {
             this.data = {
@@ -105,6 +110,9 @@ $(document).ready(function () {
 
     $('#number').on('input', function (){
         $('#number').val($('#number').val().toUpperCase())
+    })
+    $('#add-number-car').on('input', function (){
+        $('#add-number-car').val($('#add-number-car').val().toUpperCase())
     })
 })
 

@@ -13,6 +13,60 @@
 {% endblock style %}
 
 {% block content %}
+    <div class="modal modal__change-personal-data">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Личные данные</h3>
+            <form action="{% url 'account:change-personal-data' %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" value="{{ client.email }}" name="email" >
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" value="{{ client.full_name }}" name="full_name">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" value="{{ client.phone }}" name="phone" id="register-phone">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите новый пароль" name="password">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="password" class="input form__input modal__input input--light" placeholder="Повторите новый пароль" name="password2">
+                </div>
+                <button class="button btn--dark btn button--primary modal__button">Изменить данные</button></form>
+        </div>
+    </div>
+    <div class="modal modal__add-car">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Данные машины</h3>
+            <form action="{% url 'account:add_car' %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Модель машины" name="model" >
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер машины" name="registration_number" id="add-number-car">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="checkbox" class="input form__input modal__input input--light" style="display: flex" id="is_minibus"  name="is_minibus">
+                </div>
+                <button class="button btn--dark btn button--primary modal__button">Добавить машину</button></form>
+        </div>
+    </div>
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Данные машины</h3>
+            <form action="{% url 'account:add_car' %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Модель машины" name="model" >
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер машины" name="registration_number" id="add-number-car">
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="checkbox" class="input form__input modal__input input--light" style="display: flex" id="is_minibus"  name="is_minibus">
+                </div>
+                <button class="button btn--dark btn button--primary modal__button">Добавить машину</button></form>
+        </div>
+    </div>
+
     <header class="header">
         <div class="container">
             <div class="header__info">
@@ -74,8 +128,8 @@
         <section class="personal">
             <div class="container">
                 <div class="name personal__name">
-                    <h2>Алексей</h2>
-                    <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
+                    <h2>{{ client.full_name }}</h2>
+                    <img class="change-personal-data" src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
                 </div>
                 <div class="personal__info info">
                     <div class="info__item">
@@ -103,9 +157,10 @@
                                         <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать">
                                         <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
                                     </div>
-                                    <div class="car__status orange">В работе</div>
+                                    <div class="car__status orange"></div>
                                 </div>
-                                <div class="car__vin">VIN: {{ car.vin_number|default_if_none:'Не указана' }}</div>
+                                <div class="car__vin">VIN: {{ car.vin_number|default:"Не указан" }}</div>
+
                             </div>
                         {% endfor %}
                     </div>
@@ -114,25 +169,25 @@
         </section>
         <section class="works">
             <div class="container">
+            {% if events %}
                 <h3 class="subtitle">Предоставленные услуги</h3>
                 <h2 class="title">Мы с вами уже виделись!</h2>
                 <table class="works__table table" border="1">
-                    {% if events %}
-                        <tr>
-                            <th>Дата начала работ</th>
-                            <th>Дата окончания</th>
-                            <th>Фронт работ</th>
-                            <th>Стоимость</th>
-                        </tr>
-                    {% endif %}
-                    {% for event in events %}
-                        <tr>
-                            <td>{{ event.date_begin }}</td>
-                            <td>{{ event.date_finish_fact|default_if_none:'Еще на ремонте' }}</td>
-                            <td>{{ event.type_of_service_id }}</td>
-                            <td>{{ event.type_of_service_id.price }}р</td>
-                        </tr>
-                    {% endfor %}
+                    <tr>
+                        <th>Дата начала работ</th>
+                        <th>Дата окончания</th>
+                        <th>Фронт работ</th>
+                        <th>Стоимость</th>
+                    </tr>
+            {% endif %}
+            {% for event in events %}
+                    <tr>
+                        <td>{{ event.date_begin }}</td>
+                        <td>{{ event.date_finish_fact|default_if_none:'Еще на ремонте' }}</td>
+                        <td>{{ event.type_of_service_id }}</td>
+                        <td>{{ event.type_of_service_id.price }}р</td>
+                    </tr>
+            {% endfor %}
                 </table>
             </div>
         </section>

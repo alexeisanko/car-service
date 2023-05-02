@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib import messages
-from account.forms import LoginForm, RegistrationForm
+from account.forms import LoginForm, RegistrationForm, ChangePersonalDataForm, AddCarForm
+from account.models import MyUser
 from account import utilities
 from site_service.models import Lifts, Clients, Cars
 from event_calendar.models import Events
@@ -66,6 +67,32 @@ def confirm_user(request, uidb64, token):
     else:
         messages.error(request, "Activation link is invalid!")
     return redirect('home_page')
+
+
+def change_personal_data(request):
+    form = ChangePersonalDataForm(request.POST)
+    if form.is_valid():
+        MyUser.objects.filter(id=request.user.id).update(email=form.cleaned_data['email'])
+        Clients.objects.filter(id=request.user.client_id).update(email=form.cleaned_data['email'],
+                                                                 full_name=form.cleaned_data['full_name'],
+                                                                 phone=form.cleaned_data['phone'])
+        return JsonResponse({'next_page': redirect('account:user').url})
+    return JsonResponse({'error': "invalid data"})
+
+
+def add_car(request):
+    form = AddCarForm(request.POST)
+    if form.is_valid():
+        car = Cars.objects.create(
+            client_id=request.user.client,
+            model=form.cleaned_data['model'],
+            registration_number=form.cleaned_data['registration_number'],
+            is_minibus=form.cleaned_data['is_minibus'])
+        car.save()
+
+        return JsonResponse({'next_page': redirect('account:user').url})
+    else:
+        return JsonResponse({'error': "invalid data"})
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):
