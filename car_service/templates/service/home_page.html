@@ -119,7 +119,7 @@
                 </div>
             {% elif user.is_authenticated %}
                 <div class="header__auth--good">
-                    <a href="{% url 'account:profile' %}"><span>{{ user.email }}</span> <img src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                    <a href="{% url 'account:user' %}"><span>{{ user.email }}</span> <img src="{% static 'img/header/login.svg' %}" alt="->"></a>
                 </div>
             {% else %}
                 <div class="header__auth">
