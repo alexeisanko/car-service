@@ -5,8 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib import messages
-from account.forms import LoginForm, RegistrationForm, ChangePersonalDataForm, AddCarForm
-from account.models import MyUser
+from account.forms import LoginForm, RegistrationForm
 from account import utilities
 from site_service.models import Lifts, Clients, Cars
 from event_calendar.models import Events
@@ -30,6 +29,7 @@ class UserPageView(LoginRequiredMixin, TemplateView):
         context['client'] = client
         context['cars'] = Cars.objects.filter(client_id=client)
         context['events'] = Events.objects.filter(client_id=client)
+
         return context
 
 
@@ -40,10 +40,13 @@ def login_user(request):
         if user is not None:
             login(request, user)
             if user.is_staff:
-                return JsonResponse({'next_page': redirect('account:staff').url})
+                return JsonResponse({'redirect': redirect('account:staff').url})
             else:
-                return JsonResponse({'next_page': redirect('account:user').url})
-        return JsonResponse({'error': 'invalid email or password'})
+                return JsonResponse({'redirect': redirect('account:user').url})
+        return JsonResponse({'errors': [{'error_field': 'email', 'msg': 'Некорректный email или пароль'}]})
+    else:
+        errors = [{'error_field': x[0], 'msg': x[1][0]} for x in form.errors.items()]
+        return JsonResponse({'errors': errors})
 
 
 def registration_user(request):
@@ -55,9 +58,10 @@ def registration_user(request):
                                          form.cleaned_data['password']
                                          )
         utilities.activate_email(request, user, form.cleaned_data['email'], form.cleaned_data['full_name'])
-        return JsonResponse({'registration ok': "Проверь почту"})
+        return JsonResponse({'passed': 'registrations'})
     else:
-        return JsonResponse({'error': "invalid data"})
+        errors = [{'error_field': x[0], 'msg': x[1][0]} for x in form.errors.items()]
+        return JsonResponse({'errors': errors})
 
 
 def confirm_user(request, uidb64, token):
@@ -67,32 +71,6 @@ def confirm_user(request, uidb64, token):
     else:
         messages.error(request, "Activation link is invalid!")
     return redirect('home_page')
-
-
-def change_personal_data(request):
-    form = ChangePersonalDataForm(request.POST)
-    if form.is_valid():
-        MyUser.objects.filter(id=request.user.id).update(email=form.cleaned_data['email'])
-        Clients.objects.filter(id=request.user.client_id).update(email=form.cleaned_data['email'],
-                                                                 full_name=form.cleaned_data['full_name'],
-                                                                 phone=form.cleaned_data['phone'])
-        return JsonResponse({'next_page': redirect('account:user').url})
-    return JsonResponse({'error': "invalid data"})
-
-
-def add_car(request):
-    form = AddCarForm(request.POST)
-    if form.is_valid():
-        car = Cars.objects.create(
-            client_id=request.user.client,
-            model=form.cleaned_data['model'],
-            registration_number=form.cleaned_data['registration_number'],
-            is_minibus=form.cleaned_data['is_minibus'])
-        car.save()
-
-        return JsonResponse({'next_page': redirect('account:user').url})
-    else:
-        return JsonResponse({'error': "invalid data"})
 
 
 class UserLogoutView(LoginRequiredMixin, LogoutView):

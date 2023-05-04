@@ -58,18 +58,20 @@ $(document).ready(function () {
         $(this).toggleClass('header__media--active');
         $('.menu__media').toggleClass('menu__media--active');
     });
+
+
     $('.header__auth').click(function() {
         $('.modal__login').addClass('modal--visible');
     });
     $('.modal__close').click(function() {
-        $('.modal').removeClass('modal--visible');
+        DeleteErrors(true)
     });
     $('.input-reg-link').click(function() {
-        $('.modal__login').removeClass('modal--visible');
+        DeleteErrors(true)
         $('.modal__registration').addClass('modal--visible');
     });
     $('.input-login-link').click(function() {
-        $('.modal__registration').removeClass('modal--visible');
+        DeleteErrors(true)
         $('.modal__login').addClass('modal--visible');
     });
     
@@ -89,3 +91,13 @@ $(document).ready(function () {
         $('body,html').animate({scrollTop: top}, 1000);
     });
 })
+
+
+function DeleteErrors(close_modal = false) {
+    $(':input').removeClass('input--error')
+    $('.error-message').text("").removeClass('span--error')
+    $('.modal__dialog').removeClass('modal__dialog--error')
+    if (close_modal) {
+        $('.modal').removeClass('modal--visible')
+    }
+}

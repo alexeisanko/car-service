@@ -10,16 +10,17 @@
 {% endblock style %}
 
 {% block content %}
-
     <div class="modal modal__login">
         <div class="modal__dialog"><button class="modal__close"></button>
             <h3 class="modal__title">Авторизация</h3>
             <form action="{% url "account:login" %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
                     <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
+                    <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">
+                    <span class="error-message"></span>
                 </div>
                 <p class="input-reg">Еще не с нами? <span class="input-reg-link">Зарегистрируйтесь</span></p>
                 <button class="button btn--dark btn button--primary modal__button">Войти</button></form>
@@ -32,21 +33,34 @@
             <form action="/account/register/" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
                     <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
+                    <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="text" class="input form__input modal__input input--light" placeholder="Ваше имя" name="full_name">
+                    <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="text" class="input form__input modal__input input--light" placeholder="Номер телефона" name="phone" id="register-phone">
+                    <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">
+                    <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <input type="password" class="input form__input modal__input input--light" placeholder="Повторите пароль" name="password2">
+                    <span class="error-message"></span>
                 </div>
                 <p class="input-reg">Уже есть аккаунт? <span class="input-login-link">Войти</span></p>
                 <button class="button btn--dark btn button--primary modal__button">Зарегистрироваться</button></form>
+        </div>
+
+    </div>
+
+        <div class="modal modal__message">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Информация</h3>
+                <p class="text-message-modal input-reg"></p>
         </div>
     </div>
 
@@ -95,9 +109,23 @@
                         <a href="#rewievs-scroll">Отзывы</a>
                     </li>
                 </ul>
+            {% if user.is_superuser %}
+                <div class="header__auth--good">
+                    <a href="/admin"><span>Управление</span> <img src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                </div>
+            {% elif user.is_staff %}
+                <div class="header__auth--good">
+                    <a href="{% url 'account:staff' %}"><span>Администратор</span> <img src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                </div>
+            {% elif user.is_authenticated %}
+                <div class="header__auth--good">
+                    <a href="{% url 'account:profile' %}"><span>{{ user.email }}</span> <img src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                </div>
+            {% else %}
                 <div class="header__auth">
                     <span>Войти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
                 </div>
+            {% endif %}
                 <div class="header__media">
                     <span></span>
                     <span></span>
@@ -243,6 +271,7 @@
                             </div>
                             <div>
                                 <input id="select-service" list="service-car" placeholder="Выберите услугу" style="margin-top: 12px">
+                                <span class="error-message"></span>
                                 <datalist id="service-car">
                                     {% for type in type_service_car %}
                                         <option value="{{ type.name }}">{{ type.name }}</option>
@@ -261,16 +290,21 @@
                         <p class="block-title">Onko autosi sairas? Ryhdytään hommiin</p>
                         <form action="#">
                             <input id="name" type="text" placeholder="Введите ФИО">
+                            <span class="error-message"></span>
                             <input id="phone" type="text" placeholder="Введите номер телефона">
+                            <span class="error-message"></span>
                             <input id="email" type="text" placeholder="Введите Email">
+                            <span class="error-message"></span>
                             <input id="model" type="text" placeholder="Введите модель машины">
+                            <span class="error-message"></span>
                             <input id="number" type="text" placeholder="Введите номер машины">
+                            <span class="error-message"></span>
                             <textarea id="comment" cols="40" rows="10" placeholder="Оставьте комментарий"></textarea>
+                            <span class="error-message"></span>
                             <input id="start-time" type="hidden">
                             <input id="end-time" type="hidden">
                             {% csrf_token %}
                             <input id="make-record" type="submit" class="btn btn--dark" value="Записаться">
-
                         </form>
                     </div>
                 </div>

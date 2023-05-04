@@ -1,9 +1,8 @@
 from django import forms
-import re
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(required=True, )
+    email = forms.EmailField(required=True)
     password = forms.CharField(required=True)
 
 
@@ -14,17 +13,9 @@ class RegistrationForm(forms.Form):
     password = forms.CharField(required=True)
     password2 = forms.CharField(required=True)
 
-
-class ChangePersonalDataForm(forms.Form):
-    email = forms.EmailField(required=False)
-    full_name = forms.CharField(required=False)
-    phone = forms.CharField(required=False)
-    password = forms.CharField(required=False)
-    password2 = forms.CharField(required=False)
-
-
-class AddCarForm(forms.Form):
-    model = forms.CharField(required=True)
-    registration_number = forms.CharField(required=True)
-    is_minibus = forms.BooleanField(required=False)
-    vin_number = forms.BooleanField(required=False)
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data['password']
+        password2 = cleaned_data
+        if password != password2:
+            self.add_error('password2', 'Пароли не совпадают')
