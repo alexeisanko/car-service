@@ -12,6 +12,22 @@
     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
 {% endblock style %}
 
+
+
+{% block account-login %}
+    <a href="{% url 'account:logout' %}">
+        <div class="header__auth">
+            <span>Выйти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
+        </div>
+    </a>
+    <div class="header__media">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+{% endblock account-login %}
+
+
 {% block content %}
     <div class="modal modal__change-personal-data">
         <div class="modal__dialog"><button class="modal__close"></button>
@@ -26,7 +42,7 @@
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light mask-number-phone" value="{{ client.phone }}" name="phone" >
+                    <input type="text" class="input form__input modal__input input--light" value="{{ client.phone }}" name="phone" id="register-phone">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
@@ -49,7 +65,7 @@
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light mask-number-car" placeholder="Номер машины" name="registration_number">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер машины" name="registration_number" id="add-number-car">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
@@ -68,7 +84,7 @@
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light mask-number-car" placeholder="Номер машины" name="registration_number">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер машины" name="registration_number" id="add-number-car">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
@@ -84,63 +100,7 @@
         </div>
     </div>
 
-    <header class="header">
-        <div class="container">
-            <div class="header__info">
-                <div class="header__logo">
-                    <img src="{% static 'img/menu/logo.svg' %}" alt="ART-KAT">
-                    <div class="header__text">
-                        <p class="header__name">ART-KAT</p>
-                        <p class="header__desc">AUTOHUOLTO</p>
-                    </div>
-                </div>
-                <ul class="header__menu menu">
-                    <li class="menu__item">
-                        <a href="#">Как мы работаем?</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Наши услуги</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Преимущества</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Наша команда</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Отзывы</a>
-                    </li>
-                </ul>
-                <ul class="menu__media">
-                    <li class="menu__item">
-                        <a href="#">Как мы работаем?</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Наши услуги</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Преимущества</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Наша команда</a>
-                    </li>
-                    <li class="menu__item">
-                        <a href="#">Отзывы</a>
-                    </li>
-                </ul>
-                <a href="{% url 'account:logout' %}">
-                    <div class="header__auth">
-                        <span>Выйти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
-                    </div>
-                </a>
-                <div class="header__media">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </header>
+
     <main>
         <section class="personal">
             <div class="container">
@@ -184,9 +144,10 @@
                 </div>
             </div>
         </section>
+        {% if events %}
         <section class="works">
             <div class="container">
-            {% if events %}
+
                 <h3 class="subtitle">Предоставленные услуги</h3>
                 <h2 class="title">Мы с вами уже виделись!</h2>
                 <table class="works__table table" border="1">
@@ -196,7 +157,7 @@
                         <th>Фронт работ</th>
                         <th>Стоимость</th>
                     </tr>
-            {% endif %}
+
             {% for event in events %}
                     <tr>
                         <td>{{ event.date_begin }}</td>
@@ -208,6 +169,7 @@
                 </table>
             </div>
         </section>
+        {% endif %}
         <section class="entry" id="entry-scroll">
             <div class="container">
                 <h3 class="subtitle">Запись в автосервис</h3>

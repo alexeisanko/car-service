@@ -10,16 +10,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link type="image/x-icon" href="{% static 'img/favicon/favicon.ico' %}" rel="shortcut icon">
     <link type="Image/x-icon" href="{% static 'img/favicon/favicon.ico' %}" rel="icon">
-    
+
     <title> {% block title %}Автосервис{% endblock title %}</title>
     {% block style %}{% endblock style %}
 </head>
 <body>
-    {% block content %}{% endblock content %}
-    <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
-    <script src="https://unpkg.com/imask"></script>
-    <script src="{% static 'js/base.js' %}"></script>
-    {% block script %}{% endblock script %}
+{% block header %}
+    <header class="header">
+        <div class="container">
+            <div class="header__info">
+                <a href="{% url 'home_page' %}">
+                    <div class="header__logo">
+                        <img src="{% static 'img/menu/logo.svg' %}" alt="ART-KAT">
+                        <div class="header__text">
+                            <p class="header__name">ART-KAT</p>
+                            <p class="header__desc">AUTOHUOLTO</p>
+                        </div>
+                    </div>
+                </a>
+                <ul class="header__menu menu">
+                    <li class="menu__item">
+                        <a href="#step-scroll">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#list-services-scroll">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#advantages-scroll">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#team-scroll">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#rewievs-scroll">Отзывы</a>
+                    </li>
+                </ul>
+                <ul class="menu__media">
+                    <li class="menu__item">
+                        <a href="#step-scroll">Как мы работаем?</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#list-services-scroll">Наши услуги</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#advantages-scroll">Преимущества</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#team-scroll">Наша команда</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="#rewievs-scroll">Отзывы</a>
+                    </li>
+                </ul>
+                {% block account-login %}
+                    {% if user.is_superuser %}
+                        <div class="header__auth--good">
+                            <a href="/admin"><span>Управление</span> <img src="{% static 'img/header/login.svg' %}"
+                                                                          alt="->"></a>
+                        </div>
+                    {% elif user.is_staff %}
+                        <div class="header__auth--good">
+                            <a href="{% url 'account:staff' %}"><span>Администратор</span> <img
+                                    src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                        </div>
+                    {% elif user.is_authenticated %}
+                        <div class="header__auth--good">
+                            <a href="{% url 'account:user' %}"><span>{{ user.email }}</span> <img
+                                    src="{% static 'img/header/login.svg' %}" alt="->"></a>
+                        </div>
+                    {% else %}
+                        <div class="header__auth">
+                            <span>Войти</span> <img src="{% static 'img/header/login.svg' %}" alt="->">
+                        </div>
+                    {% endif %}
+                    <div class="header__media">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                {% endblock account-login %}
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+{% block content %}{% endblock content %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="https://unpkg.com/imask"></script>
+<script src="{% static 'js/base.js' %}"></script>
+{% block script %}{% endblock script %}
 
 </body>
 </html>

@@ -14,8 +14,8 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(required=True)
 
     def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data['password']
-        password2 = cleaned_data
+        super().clean()
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
         if password != password2:
             self.add_error('password2', 'Пароли не совпадают')
