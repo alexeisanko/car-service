@@ -32,3 +32,7 @@ class ChangeCarInfoForm(forms.Form):
     is_minibus = forms.BooleanField(required=False)
     vin_number = forms.CharField(required=False)
     car_id = forms.CharField(required=True)
+
+
+class StatusCarForm(forms.Form):
+    registration_number = forms.CharField(required=True)

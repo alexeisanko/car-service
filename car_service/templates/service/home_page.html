@@ -40,7 +40,7 @@
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Номер телефона" name="phone" id="register-phone">
+                    <input type="text" class="input form__input modal__input input--light mask-number-phone" placeholder="Номер телефона" name="phone" >
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
@@ -171,10 +171,9 @@
                     </div>
                 </div>
                 <div class="step__status status" id="status-scroll">
-                    <form action="#" class="status__form">
+                    <form action="{% url 'api:check_status' %}" method="GET" class="status__form">
                         <div class="status__title title">Введите номер машины</div>
-                        <input type="text" class="status__number" placeholder="х999х11">
-                        {% csrf_token %}
+                        <input type="text" class="status__number mask-number-car" placeholder="х999х11", name="registration_number">
                         <input type="submit" value="Проверить статус" class="btn btn--dark status__check">
                     </form>
                 </div>
@@ -288,16 +287,16 @@
                     </div>
                     <div class="calendar__form">
                         <p class="block-title">Onko autosi sairas? Ryhdytään hommiin</p>
-                        <form action="#">
+                        <form action="{% url 'api:make_recording' %}" method="POST">
                             <input id="name" type="text" placeholder="Введите ФИО">
                             <span class="error-message"></span>
-                            <input id="phone" type="text" placeholder="Введите номер телефона">
+                            <input id="phone" class="mask-number-phone" type="text" placeholder="Введите номер телефона">
                             <span class="error-message"></span>
                             <input id="email" type="text" placeholder="Введите Email">
                             <span class="error-message"></span>
                             <input id="model" type="text" placeholder="Введите модель машины">
                             <span class="error-message"></span>
-                            <input id="number" type="text" placeholder="Введите номер машины">
+                            <input id="number" class="mask-number-car" type="text" placeholder="Введите номер машины">
                             <span class="error-message"></span>
                             <textarea id="comment" cols="40" rows="10" placeholder="Оставьте комментарий"></textarea>
                             <span class="error-message"></span>
@@ -394,5 +393,4 @@
     <script src="{% static 'js/home_page_api.js' %}"></script>
     <script src="{% static 'js/calendar_client.js' %}"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-    <script src="https://unpkg.com/imask"></script>
 {%  endblock script %}

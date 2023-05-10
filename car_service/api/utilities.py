@@ -49,6 +49,7 @@ def make_new_record(data):
     car = crud.get_or_create_car(car_data)
     lift = _find_free_lift(data['start_time'], data['end_time'], data['service'])
     new_record = crud.make_new_record(client, car, lift, data['start_time'], data['end_time'], data['service'])
+    return True
 
 
 def _find_free_lift(start_time, end_time, type_service):

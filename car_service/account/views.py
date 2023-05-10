@@ -58,7 +58,11 @@ def registration_user(request):
                                          form.cleaned_data['password']
                                          )
         utilities.activate_email(request, user, form.cleaned_data['email'], form.cleaned_data['full_name'])
-        return JsonResponse({'passed': 'registrations'})
+        return JsonResponse({'passed': {
+            'request': 'confirm account',
+            'msg': 'Для завершения регистрации перейдите на веденную почту и подтвердите данные'
+            }
+        })
     else:
         errors = [{'error_field': x[0], 'msg': x[1][0]} for x in form.errors.items()]
         return JsonResponse({'errors': errors})

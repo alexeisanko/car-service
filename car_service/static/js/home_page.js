@@ -14,6 +14,8 @@ $(document).ready(function () {
                 },
             })
 
+
+
     $('.owl-carousel-1').owlCarousel({
         loop: true,
         margin: 20,
@@ -91,6 +93,8 @@ $(document).ready(function () {
         $('body,html').animate({scrollTop: top}, 1000);
     });
 })
+
+
 
 
 function DeleteErrors(close_modal = false) {

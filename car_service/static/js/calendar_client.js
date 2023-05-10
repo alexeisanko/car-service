@@ -6,85 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 $(document).ready(function () {
-    let phoneMask = IMask(
-        document.getElementById('phone'), {
-            mask: '+{358} (000) 000-00-00',
 
-        });
-    let phoneregisterMask = IMask(
-        document.getElementById('register-phone'), {
-            mask: '+{358} (000) 000-00-00',
-
-        });
-
-    let numberCarMask = IMask(
-        document.getElementById('number'), {
-            mask: 'aa[a]-0[00]',
-
-        })
-
-    let addnumberCarMask = IMask(
-        document.getElementById('add-number-car'), {
-            mask: 'aa[a]-0[00]',
-
-        })
-    class InfoRecord {
-        constructor() {
-            this.data = {
-                service: $('#select-service').val(),
-                name: $('#name').val(),
-                phone: phoneMask.unmaskedValue,
-                email: $('#email').val(),
-                model: $('#model').val(),
-                number_car: $('#number').val(),
-                comment: $('#comment').val(),
-                start_time: $('#start-time').attr('value'),
-                end_time: $('#end-time').attr('value')
-            }
-        }
-
-        checkData() {
-            for (let key in this.data) {
-                if (key === 'service' && !types_service.includes(this.data[key])) {
-                    return [false, `Incorrest type service.\nPlease take correct type service from list`]
-                } else if (this.data[key] == false && key != 'comment') {
-                    return [false, `Please fill in the field ${key}`]
-                } else if (key === 'phone' && this.data[key].length != 13) {
-                    return [false, `Your phone incorrect `]
-                } else if (key === 'email' && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())) {
-                    return [false, `Your email incorrect `]
-                }
-            }
-            return [true, 'Test Passed']
-        }
-    }
 
     let types_service = []
     for (let type_service of $("option")) {
         types_service.push(type_service.text)
     }
-
-    $('#make-record').click(function (e) {
-        console.log(phoneMask.unmaskedValue)
-        e.preventDefault()
-        let new_record = new InfoRecord()
-        let is_checked = new_record.checkData()
-        if (is_checked[0] === false) {
-            alert(is_checked[1])
-        } else {
-            $.ajax({
-                type: 'GET',
-                url: '/api/make_recording/',
-                dataType: 'json',
-                data: new_record.data,
-                success: function (data) {
-                    alert('Поздравляем! \n Вы записались. В будущем мы вам будем отправлять письмо на почту со всей инфомрацией. Пока просто можн оувидеть у странице администратора')
-                    location.reload()
-                },
-            })
-
-        }
-    })
 
     // Изменение типа ремонтов
     $('#select-service').on('input', function () {
@@ -108,12 +35,76 @@ $(document).ready(function () {
         }
     });
 
-    $('#number').on('input', function (){
-        $('#number').val($('#number').val().toUpperCase())
+    $('#make-record').click(function (e) {
+        e.preventDefault()
+        let new_record = new InfoRecord()
+        let is_checked = new_record.checkData()
+        if (is_checked === true) {
+                $.ajax({
+                type: 'GET',
+                url: '/api/make_recording/',
+                dataType: 'json',
+                data: new_record.data,
+                success: function (data) {
+
+                    alert('Поздравляем! \n Вы записались. В будущем мы вам будем отправлять письмо на почту со всей инфомрацией. Пока просто можн оувидеть у странице администратора')
+
+                },
+            })
+
+        }
     })
-    $('#add-number-car').on('input', function (){
-        $('#add-number-car').val($('#add-number-car').val().toUpperCase())
-    })
+
+    class InfoRecord {
+        constructor() {
+            this.data = {
+                service: $('#select-service').val(),
+                name: $('#name').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val(),
+                model: $('#model').val(),
+                number_car: $('#number').val(),
+                comment: $('#comment').val(),
+                start_time: $('#start-time').attr('value'),
+                end_time: $('#end-time').attr('value'),
+            }
+        }
+
+        checkData() {
+            console.log(this.data)
+            let field
+            let message
+            DeleteErrors(true)
+            for (let key in this.data) {
+                if (key === 'service' && !types_service.includes(this.data[key])) {
+                    field = $('#select-service')
+                    field.addClass('input--error')
+                    message = field.next()
+                    message.text(`Incorrest type service.\nPlease take correct type service from list`).addClass('span--error')
+                    return false
+                } else if (this.data[key] == false && key != 'comment') {
+                    field = $(`#{key}`)
+                    field.addClass('input--error')
+                    message = field.next()
+                    message.text(`Please fill in the field ${key}`).addClass('span--error')
+                    return false
+                } else if (key === 'phone' && this.data[key].length != 13) {
+                    field = $('#phone')
+                    field.addClass('input--error')
+                    message = field.next()
+                    message.text(`Your phone incorrect `).addClass('span--error')
+                    return false
+                } else if (key === 'email' && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())) {
+                    field = $('#email')
+                    field.addClass('input--error')
+                    message = field.next()
+                    message.text(`Your email incorrect `).addClass('span--error')
+                    return false
+                }
+            }
+            return true
+        }
+    }
 })
 
 function GetFreeTime(date, calendarEl, free_time) {
@@ -205,5 +196,14 @@ function FreeTime(date, calendarEl) {
         })
     } else {
         alert(`Incorrest type service.\nPlease take correct type service from list`)
+    }
+}
+
+function DeleteErrors(close_modal = false) {
+    $(':input').removeClass('input--error')
+    $('.error-message').text("").removeClass('span--error')
+    $('.modal__dialog').removeClass('modal__dialog--error')
+    if (close_modal) {
+        $('.modal').removeClass('modal--visible')
     }
 }

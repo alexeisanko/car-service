@@ -1178,19 +1178,19 @@ a:hover {
 
 
 
-.modal .input-group {
+.input-group {
   position: relative;
 }
-.modal .input--error {
+.input--error {
   border: 1px solid red;
   position: relative;
 }
 
-.modal .error-message {
+.error-message {
   display: none;
 }
 
-.modal .span--error {
+.span--error {
   display: block;
   color: red;
   position: absolute;
