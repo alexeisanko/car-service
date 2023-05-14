@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 $(document).ready(function () {
 
-
     let types_service = []
     for (let type_service of $("option")) {
         types_service.push(type_service.text)
@@ -46,8 +45,8 @@ $(document).ready(function () {
                 dataType: 'json',
                 data: new_record.data,
                 success: function (data) {
-
-                    alert('Поздравляем! \n Вы записались. В будущем мы вам будем отправлять письмо на почту со всей инфомрацией. Пока просто можн оувидеть у странице администратора')
+                    $('.modal__message').addClass('modal--visible');
+                    $('.text-message-modal').text('Поздравляем! \n Вы записались. В будущем мы вам будем отправлять письмо на почту со всей инфомрацией. Пока просто можно увидеть у странице администратора')
 
                 },
             })
@@ -71,7 +70,6 @@ $(document).ready(function () {
         }
 
         checkData() {
-            console.log(this.data)
             let field
             let message
             DeleteErrors(true)
@@ -88,7 +86,7 @@ $(document).ready(function () {
                     message = field.next()
                     message.text(`Please fill in the field ${key}`).addClass('span--error')
                     return false
-                } else if (key === 'phone' && this.data[key].length != 13) {
+                } else if (key === 'phone' && this.data[key].length != 20) {
                     field = $('#phone')
                     field.addClass('input--error')
                     message = field.next()
@@ -132,6 +130,8 @@ function GetFreeTime(date, calendarEl, free_time) {
             if (info.event.title === 'Свободно') {
                 $('.fc-list-event').css('backgroundColor', 'white')
                 info.el.style.backgroundColor = '#005484';
+                // $('#start-time').attr('value', getLocalISOString(info.event.start))
+                // $('#end-time').attr('value', getLocalISOString(info.event.end))
                 $('#start-time').attr('value', info.event.start.toISOString())
                 $('#end-time').attr('value', info.event.end.toISOString())
             }
@@ -190,12 +190,14 @@ function FreeTime(date, calendarEl) {
                 if (data['status'] === 'ok') {
                     GetFreeTime(date, calendarEl, data['free_places'])
                 } else {
-                    alert('Внутренняя ошибка, запись пока недоступна')
+                    $('.modal__message').addClass('modal--visible');
+                    $('.text-message-modal').text('Неполадки с серверов. Повторите попытку попозже')
                 }
             },
         })
     } else {
-        alert(`Incorrest type service.\nPlease take correct type service from list`)
+        $('.modal__message').addClass('modal--visible');
+        $('.text-message-modal').text('Для проверки свободного времени необходимо выбрать тип сервиса')
     }
 }
 
@@ -206,4 +208,11 @@ function DeleteErrors(close_modal = false) {
     if (close_modal) {
         $('.modal').removeClass('modal--visible')
     }
+}
+
+function getLocalISOString(date) {
+  const offset = date.getTimezoneOffset()
+  const offsetAbs = Math.abs(offset)
+  const isoString = new Date(date.getTime() - offset * 60 * 1000).toISOString()
+  return `${isoString.slice(0, -1)}${offset > 0 ? '-' : '+'}${String(Math.floor(offsetAbs / 60)).padStart(2, '0')}:${String(offsetAbs % 60).padStart(2, '0')}`
 }

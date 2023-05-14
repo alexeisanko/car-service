@@ -102,22 +102,85 @@ function GetEvent(id_event) {
             'id_event': id_event,
         },
         success: function (data) {
-            alert(
-                `Client: ${data['client']}\n
-Car: ${data['car']}\n
-Service: ${data['service']}\n
-Start: ${data['start']}\n
-End: ${data['end']}`
-            )
+            let $modal = $('.modal__change-event')
+            $modal.addClass('modal--visible');
+            $modal.find($("[name='full_name']")).val(data['client'])
+            $modal.find($("[name='car']")).val(data['car'])
+            $modal.find($("[name='type_service']")).val(data['service'])
+            $modal.find($("[name='start_time']")).val(data['start'].slice(0, 16))
+            $modal.find($("[name='end_time']")).val(data['end'].slice(0, 16))
+            $modal.attr('data', id_event)
         },
     })
 }
 
 $(document).ready(function () {
-    $('.lift').on('click', 'a', function (event) {
-        event.preventDefault()
-        let calendarEl = document.getElementById('calendar');
+    $('.lift').on('click', 'a', function () {
         let lift = $(this).attr('id')
-        GetCalendar(calendarEl, lift)
+        if (document.getElementById('calendar')) {
+            let calendarEl = document.getElementById('calendar');
+            GetCalendar(calendarEl, lift)
+        } else {
+            $.ajax({
+            type: 'GET',
+            url: '/account/staff-lifts',
+            success: function (data) {
+                $('.is-main-section').html(data)
+                let calendarEl = document.getElementById('calendar');
+                GetCalendar(calendarEl, lift)
+                },
+            })
+
+        }
+    })
+
+    $('.staff-forms').on('click', function () {
+        $.ajax({
+        type: 'GET',
+        url: '/account/staff-forms',
+        success: function (data) {
+            $('.is-main-section').html(data)
+            },
+        })
+    })
+
+    $('.staff-profile').on('click', function () {
+        $.ajax({
+        type: 'GET',
+        url: '/account/staff-profile',
+        success: function (data) {
+            $('.is-main-section').html(data)
+            },
+        })
+    })
+
+    $('.modal__close').click(function() {
+        DeleteErrors(true)
+    });
+
+    $('#delete-event').click(function (e) {
+        e.preventDefault()
+        $.ajax({
+            type: 'GET',
+            url: '/api/delete-event/',
+            dataType: 'json',
+            data: {"event_id": $('.modal__change-event').attr('data')},
+            success: function (data) {
+                DeleteErrors(true)
+                alert('Событие удалено, не забудь обновить страницу')
+            },
+        })
+
+
     })
 })
+
+
+function DeleteErrors(close_modal = false) {
+    $(':input').removeClass('input--error')
+    $('.error-message').text("").removeClass('span--error')
+    $('.modal__dialog').removeClass('modal__dialog--error')
+    if (close_modal) {
+        $('.modal').removeClass('modal--visible')
+    }
+}

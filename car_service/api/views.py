@@ -5,6 +5,7 @@ from api import utilities
 from api.forms import ChangePersonalDataForm, AddCarForm, ChangeCarInfoForm, StatusCarForm
 from django.shortcuts import redirect
 from site_service.models import Lifts, Clients, Cars
+from event_calendar.models import Events
 from account.models import MyUser
 
 
@@ -62,6 +63,14 @@ def get_select_event(request):
     return JsonResponse(event)
 
 
+@require_GET
+def delete_event(request):
+    response = request.GET
+    event = Events.objects.filter(id=response['event_id'])
+    event.delete()
+    return JsonResponse({'passed': 'ok'})
+
+
 @require_POST
 def change_personal_data(request):
     form = ChangePersonalDataForm(request.POST)
@@ -111,6 +120,9 @@ def add_car(request):
         return JsonResponse({'errors': errors})
 
 
-@require_POST
+@require_GET
 def delete_car(request):
-    pass
+    response = request.GET
+    car = Cars.objects.filter(id=response['car_id'])
+    car.delete()
+    return JsonResponse({'passed': 'ok'})

@@ -1,3 +1,5 @@
+import datetime
+
 from event_calendar.models import Events, TypesOfServices, StatusServices
 from site_service.models import Lifts, Clients, Cars
 from account.models import MyUser
@@ -72,15 +74,17 @@ def get_or_create_car(data):
 
 
 def is_free_lift(year, month, day, lift_id, start_time, end_time):
-    event = Events.objects.filter(lift_id=lift_id) \
+    # start_time = datetime.datetime.strptime(start_time, '%Y-%m-%dT%H:%M:%S.000+03:00')
+    # end_time = datetime.datetime.strptime(end_time, '%Y-%m-%dT%H:%M:%S.000+03:00')
+    event_day = Events.objects.filter(lift_id=lift_id) \
         .filter(date_begin__year=year) \
         .filter(date_begin__month=month) \
-        .filter(date_begin__day=day) \
-        .filter(date_begin__gte=start_time) \
-        .filter(date_finish_plan__lte=end_time)
-    if not event:
-        return True
-    return False
+        .filter(date_begin__day=day)
+    if event_day.filter(date_finish_plan__gt=start_time).filter(date_finish_plan__lte=end_time) \
+            or event_day.filter(date_begin__gte=start_time).filter(date_begin__lt=end_time)\
+            or event_day.filter(date_begin__lte=start_time).filter(date_finish_plan__gte=end_time):
+        return False
+    return True
 
 
 def make_new_record(client, car, lift, start_time, end_time, type_service):

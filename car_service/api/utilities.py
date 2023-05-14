@@ -1,5 +1,6 @@
 from api import crud
 from datetime import datetime
+import datetime as dt
 
 
 def find_free_place_for_work(date: str, type_service: str) -> dict:
@@ -88,9 +89,9 @@ def get_events(lift_number: str):
 
 def get_event(id_event):
     event = crud.get_one_event(id_event)
-    clean_event = {'client': event.client_id.full_name,
-                   'car': event.car_id.model,
+    clean_event = {'client': f'{event.client_id.full_name} ({event.client_id.phone})',
+                   'car': f'{event.car_id.model} ({event.car_id.registration_number})',
                    'service': event.type_of_service_id.name,
-                   'start': event.date_begin,
-                   'end': event.date_finish_plan}
+                   'start': event.date_begin + dt.timedelta(hours=3),
+                   'end': event.date_finish_plan + dt.timedelta(hours=3)}
     return clean_event

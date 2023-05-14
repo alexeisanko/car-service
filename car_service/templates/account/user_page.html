@@ -132,7 +132,7 @@
                                     <p class="car__title">{{ car.model }} ({{ car.registration_number }})</p>
                                     <div class="car__btns">
                                         <img src="{% static 'img/user/pencil.svg' %}" alt="Редактировать" class="change-car-info" data-car-id="{{ car.id }}">
-                                        <img src="{% static 'img/user/basket.svg' %}" alt="Удалить">
+                                        <img src="{% static 'img/user/basket.svg' %}" alt="Удалить" class="delete-car" data-car-id="{{ car.id }}>
                                     </div>
                                     <div class="car__status orange"></div>
                                 </div>
@@ -206,11 +206,12 @@
                         <div class="calendar__form">
                             <p class="block-title">Onko autosi sairas? Ryhdytään hommiin</p>
                             <form action="#">
-                                <input id="name" type="text" placeholder="Введите ФИО">
-                                <input id="phone" type="text" placeholder="Введите номер телефона">
-                                <input id="email" type="text" placeholder="Введите Email">
-                                <input id="model" type="text" placeholder="Введите модель машины">
-                                <input id="number" type="text" placeholder="Введите номер машины">
+                                <input list="my-car" placeholder="Выберите свою машину">
+                                <datalist id="service-car">
+                                        {% for type in type_service_car %}
+                                            <option value="{{ type.name }}">{{ type.name }}</option>
+                                        {% endfor %}
+                                </datalist>
                                 <textarea id="comment" cols="40" rows="10"
                                           placeholder="Оставьте комментарий"></textarea>
                                 <input id="start-time" type="hidden">

@@ -1,0 +1,80 @@
+.header {
+  margin-bottom: 80px;
+  margin-top: 40px;
+}
+.header__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.header__logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.header__text {
+  margin-left: 12px;
+}
+.header__name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+  text-transform: uppercase;
+}
+.header__desc {
+  line-height: 16px;
+  text-transform: uppercase;
+  margin-top: 7px;
+}
+.header__auth {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.header__auth img {
+  margin-left: 10px;
+}
+.header__auth:hover {
+  color: #005484;
+  font-weight: 600;
+  cursor: pointer;
+}
+.header__media {
+    display: none;
+
+  }
+
+.header__auth--good {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.header__auth--good img {
+  margin-left: 10px;
+}
+.header__auth--good:hover {
+  color: #005484;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.input-group {
+  position: relative;
+}
+.input--error {
+  border: 1px solid red;
+  position: relative;
+}
+
+.error-message {
+  display: none;
+}
+
+.span--error {
+  display: block;
+  color: red;
+  position: absolute;
+  top: -15px;
+  font-size: 12px;
+}

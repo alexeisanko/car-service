@@ -9,7 +9,9 @@ urlpatterns = [
     path('get_custom_service/', views.get_custom_service, name='get_custom_service'),
     path('get_events/', views.get_events, name='get_events'),
     path('get_select_event/', views.get_select_event, name='get_select_event'),
+    path('delete-event/', views.delete_event, name='delete_event'),
     path('change_personal_data', views.change_personal_data, name='change-personal-data'),
     path('add_car/', views.add_car, name='add_car'),
+    path('delete-car/', views.delete_car, name='delete_car'),
     path('change_car_info/', views.change_car_info, name='change_car_info'),
 ]

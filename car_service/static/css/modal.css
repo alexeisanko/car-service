@@ -1,0 +1,133 @@
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  z-index: 199;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal__title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.modal input {
+  width: 298px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #005484;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 19px;
+  text-indent: 20px;
+  margin: auto;
+  display: block;
+  margin-bottom: 15px;
+  outline: none;
+}
+.modal .input-reg {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #BDBDBD;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.modal .input-reg-link {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #4292B9;
+  transition: text-decoration 0.2s;
+}
+.modal .input-reg-link:hover {
+  text-decoration: underline;
+}
+.modal .input-login-link {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #4292B9;
+  transition: text-decoration 0.2s;
+}
+.modal .input-login-link:hover {
+  text-decoration: underline;
+}
+.modal button {
+  margin: auto;
+  display: block;
+}
+.modal--visible {
+  opacity: 1;
+  visibility: visible;
+}
+.modal__dialog {
+  position: relative;
+  max-width: 36.36rem;
+  background: #fff;
+  padding: 2.357rem 3.5rem 1.928rem;
+  color: #000;
+  border: 1px solid #005484;
+  border-radius: 20px;
+}
+.modal__close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 15px;
+  height: 15px;
+  background: transparent url("../img/header/close.svg") no-repeat center;
+  border: none;
+  margin: 12px;
+  cursor: pointer;
+  outline: 0;
+}
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+    33% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    66% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+    100% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+    /* 100% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    } */
+}
+.modal__dialog--error {
+    animation: shake 0.15s;
+}

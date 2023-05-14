@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block class-html %}
+    class="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded"
+{% endblock class-html %}
+
+{% block title %}
+    Управление ART-KAT
+{% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="{% static 'css/account/staff.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+{% endblock style %}
+
+{% block content %}
+    <div class="modal modal__change-event">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Событие</h3>
+            <form method="GET" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" value="" name="full_name" readonly>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" value="" name="car" readonly>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light" name="type_service" readonly>
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="datetime-local" class="input form__input modal__input input--light"  name="start_time">
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="datetime-local" class="input form__input modal__input input--light"  name="end_time">
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="datetime-local" class="input form__input modal__input input--light"  name="end_time_fact" placeholder="Фактическое время окончания">
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light"  name="status" placeholder="Введите статус ремонта">
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light"  name="worker" placeholder="ответственный за ремонт">
+                    <span class="error-message"></span>
+                </div>
+                <div style="display: flex">
+                    <button id="delete-event" class="button btn--dark btn button--primary modal__button" style="background-color: #ff849c">Удалить</button>
+                    <button id="update-event" class="button btn--dark btn button--primary modal__button update-event">Обновить</button></div></form>
+
+        </div>
+    </div>
+
+    <div id="app">
+        {% block header %}
+        <nav id="navbar-main" class="navbar is-fixed-top">
+            <div class="navbar-brand">
+                <a class="navbar-item is-hidden-desktop jb-aside-mobile-toggle">
+                    <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+                </a>
+            </div>
+            <div class="navbar-brand is-right">
+                <a class="navbar-item is-hidden-desktop jb-navbar-menu-toggle" data-target="navbar-menu">
+                    <span class="icon"><i class="mdi mdi-dots-vertical"></i></span>
+                </a>
+            </div>
+            <div class="navbar-menu fadeIn animated faster" id="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+                        <a class="navbar-link is-arrowless">
+                            <div class="is-user-avatar">
+                                <img src="https://api.dicebear.com/6.x/fun-emoji/svg" alt="avatar">
+                            </div>
+                            <div class="is-user-name"><span>{{ user.email}}</span></div>
+                            <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a href="profile.html" class="navbar-item">
+                                <span class="icon"><i class="mdi mdi-account"></i></span>
+                                <span>Профиль</span>
+                            </a>
+                            <hr class="navbar-divider">
+                            <a href="{% url 'account:logout' %}" class="navbar-item">
+                                <span class="icon"><i class="mdi mdi-logout"></i></span>
+                                <span>Выйти</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="https://justboil.me/bulma-admin-template/free-html-dashboard/" title="About"
+                       class="navbar-item has-divider is-desktop-icon-only">
+                        <span class="icon"><i class="mdi mdi-help-circle-outline"></i></span>
+                        <span>About</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        {% endblock header %}
+        <aside class="aside is-placed-left is-expanded">
+            <div class="aside-tools">
+                <div class="aside-tools-label">
+                    <span><b>ART-KAT</b> Admin</span>
+                </div>
+            </div>
+            <div class="menu is-menu-main">
+                <p class="menu-label">General</p>
+                <ul class="menu-list">
+                    <li>
+                        <a class="has-icon has-dropdown-icon">
+                            <span class="icon"><i class="mdi mdi-view-list"></i></span>
+                            <span class="menu-item-label">Car lifts</span>
+                            <div class="dropdown-icon">
+                                <span class="icon"><i class="mdi mdi-plus"></i></span>
+                            </div>
+                        </a>
+                        <ul class="lift">
+                            <li>
+                                <a id="get_all_lifts">
+                                    <span>Все</span>
+                                </a>
+                            </li>
+                            {% for lift in lifts %}
+                                <li>
+                                    <a id="get_{{ lift.id }}_lift">
+                                        <span>{{ lift.name }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-icon staff-forms">
+                            <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
+                            <span class="menu-item-label">Forms</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="has-icon staff-profile">
+                            <span class="icon"><i class="mdi mdi-account-circle"></i></span>
+                            <span class="menu-item-label">Profile</span>
+                        </a>
+                    </li>
+                </ul>
+                <p class="menu-label">Info</p>
+                <ul class="menu-list">
+                    <li>
+                        <a href="https://justboil.me/bulma-admin-template/free-html-dashboard/" class="has-icon">
+                            <span class="icon"><i class="mdi mdi-help-circle"></i></span>
+                            <span class="menu-item-label">Messages</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+
+
+        <section class="hero is-hero-bar">
+            <div class="hero-body">
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item"><h1 class="title">
+                            Statistic
+                        </h1></div>
+                    </div>
+                    <div class="level-right" style="display: none;">
+                        <div class="level-item"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section is-main-section">
+            <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="card tile is-child">
+                        <div class="card-content">
+                            <div class="level is-mobile">
+                                <div class="level-item">
+                                    <div class="is-widget-label"><h3 class="subtitle is-spaced">
+                                        Clients today
+                                    </h3>
+                                        <h1 class="title">
+                                            512
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="level-item has-widget-icon">
+                                    <div class="is-widget-icon"><span class="icon has-text-primary is-large"><i
+                                            class="mdi mdi-account-multiple mdi-48px"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile is-parent">
+                    <div class="card tile is-child">
+                        <div class="card-content">
+                            <div class="level is-mobile">
+                                <div class="level-item">
+                                    <div class="is-widget-label"><h3 class="subtitle is-spaced">
+                                        Sales
+                                    </h3>
+                                        <h1 class="title">
+                                            $7,770
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="level-item has-widget-icon">
+                                    <div class="is-widget-icon"><span class="icon has-text-info is-large"><i
+                                            class="mdi mdi-cart-outline mdi-48px"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile is-parent">
+                    <div class="card tile is-child">
+                        <div class="card-content">
+                            <div class="level is-mobile">
+                                <div class="level-item">
+                                    <div class="is-widget-label"><h3 class="subtitle is-spaced">
+                                        Loading lifts
+                                    </h3>
+                                        <h1 class="title">
+                                            56%
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="level-item has-widget-icon">
+                                    <div class="is-widget-icon"><span class="icon has-text-success is-large"><i
+                                            class="mdi mdi-finance mdi-48px"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Calendar
+                    </p>
+                    <a href="#" class="card-header-icon">
+                        <span class="icon"><i class="mdi mdi-reload"></i></span>
+                    </a>
+                </header>
+                <div class="card-content">
+                    <div class="chart-area">
+                        <div id='calendar'></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+    <script type="text/javascript" src={% static 'js/account/staff.js' %}></script>
+{% endblock script %}

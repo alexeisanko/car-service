@@ -10,6 +10,18 @@ $(document).ready(function () {
         let car_id = $(this).data('carId')
         $('.get-car-id').val(car_id)
     });
+
+    $('.delete-car').click(function (){
+        $.ajax({
+            type: 'GET',
+            url: '/api/delete-car/',
+            dataType: 'json',
+            data: {"car_id": $(this).data('carId')},
+            success: function (data) {
+                location.reload()
+            },
+        })
+    })
     $('.modal__close').click(function() {
         DeleteErrors(true)
     });

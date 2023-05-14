@@ -12,7 +12,34 @@ from event_calendar.models import Events
 
 
 class StaffPageView(LoginRequiredMixin, TemplateView):
-    template_name = 'account/staff_page.html'
+    template_name = 'account/staff/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lifts'] = Lifts.objects.all()
+        return context
+
+
+class StaffPageFormsView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/staff/forms.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lifts'] = Lifts.objects.all()
+        return context
+
+
+class StaffPageLiftsView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/staff/lifts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lifts'] = Lifts.objects.all()
+        return context
+
+
+class StaffPageProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/staff/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
