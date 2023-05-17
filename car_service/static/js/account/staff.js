@@ -85,10 +85,16 @@ function RenderCalendar(calendarEl, events) {
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: events,
+        navLinks: true,
         eventClick: function (info) {
             GetEvent(info.event.extendedProps.id_event)
+        },
+        dateClick: function (info) {
+            alert('Окно для создания записи на: ' + info.dateStr)
+        },
+        navLinkDayClick: function (date) {
+            console.log('day', date.toISOString());
         }
-
     });
     calendar.render();
 }
@@ -122,12 +128,12 @@ $(document).ready(function () {
             GetCalendar(calendarEl, lift)
         } else {
             $.ajax({
-            type: 'GET',
-            url: '/account/staff-lifts',
-            success: function (data) {
-                $('.is-main-section').html(data)
-                let calendarEl = document.getElementById('calendar');
-                GetCalendar(calendarEl, lift)
+                type: 'GET',
+                url: '/account/staff-lifts',
+                success: function (data) {
+                    $('.is-main-section').html(data)
+                    let calendarEl = document.getElementById('calendar');
+                    GetCalendar(calendarEl, lift)
                 },
             })
 
@@ -136,25 +142,25 @@ $(document).ready(function () {
 
     $('.staff-forms').on('click', function () {
         $.ajax({
-        type: 'GET',
-        url: '/account/staff-forms',
-        success: function (data) {
-            $('.is-main-section').html(data)
+            type: 'GET',
+            url: '/account/staff-forms',
+            success: function (data) {
+                $('.is-main-section').html(data)
             },
         })
     })
 
     $('.staff-profile').on('click', function () {
         $.ajax({
-        type: 'GET',
-        url: '/account/staff-profile',
-        success: function (data) {
-            $('.is-main-section').html(data)
+            type: 'GET',
+            url: '/account/staff-profile',
+            success: function (data) {
+                $('.is-main-section').html(data)
             },
         })
     })
 
-    $('.modal__close').click(function() {
+    $('.modal__close').click(function () {
         DeleteErrors(true)
     });
 
@@ -174,7 +180,6 @@ $(document).ready(function () {
 
     })
 })
-
 
 function DeleteErrors(close_modal = false) {
     $(':input').removeClass('input--error')
