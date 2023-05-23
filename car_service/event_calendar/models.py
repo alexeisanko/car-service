@@ -61,6 +61,8 @@ class Events(models.Model):
                                 )
     date_begin = models.DateTimeField(verbose_name='Начало работы')
     date_finish_plan = models.DateTimeField(verbose_name='Плановое время окончания')
+    date_begin_fact = models.DateTimeField(verbose_name='Фактическое время начала работ', blank=True, null=True,
+                                            default=None)
     date_finish_fact = models.DateTimeField(verbose_name='Фактическое время окончания', blank=True, null=True,
                                             default=None)
     discount = models.IntegerField(verbose_name='Размер скидки', blank=True, default=0)

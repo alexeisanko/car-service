@@ -5,7 +5,7 @@ from api import utilities
 from api.forms import ChangePersonalDataForm, AddCarForm, ChangeCarInfoForm, StatusCarForm
 from django.shortcuts import redirect
 from site_service.models import Lifts, Clients, Cars
-from event_calendar.models import Events
+from event_calendar.models import Events, Discounts
 from account.models import MyUser
 
 
@@ -61,6 +61,19 @@ def get_select_event(request):
     response = request.GET
     event = utilities.get_event(response['id_event'])
     return JsonResponse(event)
+    
+    
+@require_POST
+def change_event(request):
+    response = request.POST
+    
+    Events.objects.filter(id=response['event_id']).update(
+            date_begin=response['start_time_plan'],
+            date_finish_plan=response['end_time_plan'],
+            date_begin_fact=response['start_time_fact'],
+            date_finish_fact=response['end_time_fact'],
+            )
+    return JsonResponse({'passed': {'msg': 'Ура'}})
 
 
 @require_GET
@@ -126,3 +139,12 @@ def delete_car(request):
     car = Cars.objects.filter(id=response['car_id'])
     car.delete()
     return JsonResponse({'passed': 'ok'})
+    
+
+@require_GET
+def get_working_conditions(request):
+    response = request.GET
+    conditions = Discounts.objects.filter(date=response['date'])
+    if conditions:
+        return JsonResponse({'discount': conditions[0].size_discount})
+    return JsonResponse({})

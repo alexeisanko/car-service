@@ -90,8 +90,17 @@ def get_events(lift_number: str):
 def get_event(id_event):
     event = crud.get_one_event(id_event)
     clean_event = {'client': f'{event.client_id.full_name} ({event.client_id.phone})',
-                   'car': f'{event.car_id.model} ({event.car_id.registration_number})',
-                   'service': event.type_of_service_id.name,
-                   'start': event.date_begin + dt.timedelta(hours=3),
-                   'end': event.date_finish_plan + dt.timedelta(hours=3)}
+                  'car': f'{event.car_id.model} ({event.car_id.registration_number})',
+                  'service': event.type_of_service_id.name,
+                  'start_plan': event.date_begin + dt.timedelta(hours=3),
+                  'end_plan': event.date_finish_plan + dt.timedelta(hours=3),
+                  'status_service': event.status_id.name,
+                }
+                
+    if event.date_begin_fact:
+        clean_event['start_fact'] = event.date_begin_fact + dt.timedelta(hours=3)
+    if event.date_finish_fact:
+        clean_event['end_fact'] = event.date_finish_fact + dt.timedelta(hours=3)
+    if event.worker_id:
+        clean_event['worker'] = event.worker_id.name
     return clean_event

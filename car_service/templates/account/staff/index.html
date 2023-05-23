@@ -17,45 +17,101 @@
 
 {% block content %}
     <div class="modal modal__change-event">
-        <div class="modal__dialog"><button class="modal__close"></button>
+        <div class="modal__dialog modal__dialog--super">
+            <button class="modal__close"></button>
             <h3 class="modal__title">Событие</h3>
-            <form method="GET" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+            <form method="POST" action="{% url 'api:change_event' %}" class="form modal__form" novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" value="" name="full_name" readonly>
+                    <p>Клиент:</p>
+                    <p class="input-group__text name_client"></p>
+                </div>
+                <div class="input-group modal__input-group">
+                    <p>Машина:</p>
+                    <p class="input-group__text car_client"></p>
+                </div>
+                <div class="input-group modal__input-group">
+                    <p>Работа:</p>
+                    <p class="input-group__text type_service"></p>
+                </div>
+                <div class="input-group modal__input-group">
+                    <p>Примечание:</p>
+                    <p class="input-group__text"></p>
+                </div>
+                <p class="modal-title">Время работы по записи</p>
+                <div class="modal__block plan-time">
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input  form__input modal__input input--light staff-date-input" name="start_time_plan" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input form__input modal__input input--light staff-date-input" name="end_time_plan" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <p class="modal-title">Фактическое время работы</p>
+                <div class="modal__block">
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input form__input modal__input input--light staff-date-input" name="start_time_fact" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input form__input modal__input input--light staff-date-input" name="end_time_fact" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <p class="modal-title">Статус</p>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light staff-info-input" name="status" placeholder="Введите статус ремонта">
+                    <span class="error-message"></span>
+                </div>
+                <p class="modal-title">Ответственный</p>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light staff-info-input" name="worker" placeholder="Ответственный за ремонт">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" value="" name="car" readonly>
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" name="type_service" readonly>
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="datetime-local" class="input form__input modal__input input--light"  name="start_time">
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="datetime-local" class="input form__input modal__input input--light"  name="end_time">
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="datetime-local" class="input form__input modal__input input--light"  name="end_time_fact" placeholder="Фактическое время окончания">
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light"  name="status" placeholder="Введите статус ремонта">
-                    <span class="error-message"></span>
-                </div>
-                <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light"  name="worker" placeholder="ответственный за ремонт">
+                    <textarea type="text" rows="6" cols="35" class="input form__input modal__input input--light staff-info-input" name="Note" placeholder="Примечание"></textarea>
                     <span class="error-message"></span>
                 </div>
                 <div style="display: flex">
                     <button id="delete-event" class="button btn--dark btn button--primary modal__button" style="background-color: #ff849c">Удалить</button>
-                    <button id="update-event" class="button btn--dark btn button--primary modal__button update-event">Обновить</button></div></form>
-
+                    <button id="update-event" class="button btn--dark btn button--primary modal__button update-event">Обновить</button></div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal modal__change_work">
+        <div class="modal__dialog modal__dialog--super">
+            <button class="modal__close"></button>
+            <h3 class="modal__title">Условия работы</h3>
+            <form method="POST" action="{% url 'api:change_event' %}" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <p class="modal-title">Время работы автосервиса</p>
+                <div class="modal__block plan-time">
+                    <div class="input-group modal__input-group">
+                        <input type="time" class="input  form__input modal__input input--light staff-date-input" name="open_time" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="input-group modal__input-group">
+                        <input type="time" class="input form__input modal__input input--light staff-date-input" name="close_time" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <p class="modal-title">Уровень скидки</p>
+                <div class="input-group modal__input-group">
+                    <input type="text" class="input form__input modal__input input--light staff-info-input" name="discount" placeholder="Введите размер скидки на этот день">
+                    <span class="error-message"></span>
+                </div>
+                <div style="display: flex">
+                    <button id="delete-event" class="button btn--dark btn button--primary modal__button" style="background-color: #ff849c">Сбросить состояние</button>
+                    <button id="update-event" class="button btn--dark btn button--primary modal__button update-event">Изменить</button></div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal modal__message">
+        <div class="modal__dialog"><button class="modal__close"></button>
+            <h3 class="modal__title">Информация</h3>
+                <p class="text-message-modal input-reg"></p>
         </div>
     </div>
 
@@ -83,11 +139,11 @@
                             <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
                         </a>
                         <div class="navbar-dropdown">
-{#                            <a href="profile.html" class="navbar-item">#}
-{#                                <span class="icon"><i class="mdi mdi-account"></i></span>#}
-{#                                <span>Профиль</span>#}
-{#                            </a>#}
-{#                            <hr class="navbar-divider">#}
+                            <a href="{% url 'home_page' %}" class="navbar-item">
+                                <span class="icon"><i class="mdi mdi-account"></i></span>
+                                <span>На главную</span>
+                            </a>
+                            <hr class="navbar-divider">
                             <a href="{% url 'account:logout' %}" class="navbar-item">
                                 <span class="icon"><i class="mdi mdi-logout"></i></span>
                                 <span>Выйти</span>

@@ -45,7 +45,7 @@
 
   }
 
-.header__auth--good {
+.header__auth--good a {
   display: flex;
   align-items: center;
   justify-content: flex-end;

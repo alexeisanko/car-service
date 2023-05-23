@@ -128,6 +128,75 @@
         transform: translate(1px, -2px) rotate(-1deg);
     } */
 }
+
+
+
+
+
 .modal__dialog--error {
     animation: shake 0.15s;
+}
+
+.input-group__text {
+    width: 289.5px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #616161;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 16px;
+    margin-bottom: 5px;
+    color: #BDBDBD;
+}
+
+.modal__block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal__block input {
+    max-width: 230px;
+    text-indent: 5px;
+    font-size: 14px;
+}
+
+.input-group textarea {
+    height: 140px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #005484;
+    font-size: 14px;
+    font-style: italic;
+    width: 298px;
+    font-weight: 400;
+    line-height: 19px;
+    padding: 10px;
+    text-indent: 10px;
+    margin-bottom: 15px;
+}
+
+.modal__dialog--super input {
+    font-size: 14px;
+}
+
+.staff-date-input {
+    width: 170px !important;
+    text-indent: 0px !important;
+    margin-right: 20px !important;
+}
+
+.staff-info-input {
+    width: -webkit-fill-available !important;
+    margin-right: 20px !important;
+}
+
+.plan-time input {
+    color: #BDBDBD !important;
 }

@@ -93,7 +93,7 @@ function RenderCalendar(calendarEl, events) {
             alert('Окно для создания записи на: ' + info.dateStr)
         },
         navLinkDayClick: function (date) {
-            console.log('day', date.toISOString());
+            GetWorkingConditions(date.toISOString())
         }
     });
     calendar.render();
@@ -110,12 +110,45 @@ function GetEvent(id_event) {
         success: function (data) {
             let $modal = $('.modal__change-event')
             $modal.addClass('modal--visible');
-            $modal.find($("[name='full_name']")).val(data['client'])
-            $modal.find($("[name='car']")).val(data['car'])
-            $modal.find($("[name='type_service']")).val(data['service'])
-            $modal.find($("[name='start_time']")).val(data['start'].slice(0, 16))
-            $modal.find($("[name='end_time']")).val(data['end'].slice(0, 16))
+            $modal.find($('.name_client')).text(data['client'])
+            $modal.find($('.car_client')).text(data['car'])
+            $modal.find($('.type_service')).text(data['service'])
+            $modal.find($("[name='start_time_plan']")).val(data['start_plan'].slice(0, 16))
+            $modal.find($("[name='end_time_plan']")).val(data['end_plan'].slice(0, 16))
+            if (data['start_fact']) {
+                $modal.find($("[name='start_time_fact']")).val(data['start_fact'].slice(0, 16))
+            }
+            if (data['end_fact']) {
+                $modal.find($("[name='end_time_fact']")).val(data['end_fact'].slice(0, 16))
+            }
+            $modal.find($("[name='status']")).val(data['status_service'])
+            $modal.find($("[name='worker']")).val(data['worker'])
             $modal.attr('data', id_event)
+        },
+    })
+}
+
+function GetWorkingConditions(date) {
+    $.ajax({
+        type: 'GET',
+        url: '/api/get_working_conditions/',
+        dataType: 'json',
+        data: {
+            'date': date.slice(0,10),
+        },
+        success: function (data) {
+            let $modal = $('.modal__change_work')
+            $modal.addClass('modal--visible');
+            $modal.find($('.modal__title')).text(`Условия работы ${date.slice(0,10)}`)
+            if (data) {
+                $modal.find($("[name='open_time']")).val(data['open'])
+                $modal.find($("[name='close_time']")).val(data['close']) 
+                $modal.find($("[name='discount']")).val(data['discount'])
+            } else {
+                $modal.find($("[name='open_time']")).val('')
+                $modal.find($("[name='close_time']")).val('') 
+                $modal.find($("[name='discount']")).val(none)
+            }
         },
     })
 }
@@ -173,12 +206,50 @@ $(document).ready(function () {
             data: {"event_id": $('.modal__change-event').attr('data')},
             success: function (data) {
                 DeleteErrors(true)
-                alert('Событие удалено, не забудь обновить страницу')
+                MessageEvent({'msg': 'Событие удалено, не забудь обновить страницу'})
             },
         })
-
-
     })
+    
+    $('.modal').on("submit", "form", function (e) {
+        e.preventDefault()
+        DeleteErrors()
+        let $form = $(this);
+        let data_form = $form.serialize()
+        data_form = data_form + `&event_id=${$('.modal__change-event').attr('data')}`
+        console.log(data_form)
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            dataType: 'json',
+            data: data_form,
+            success: function (data) {
+                if (data['errors']) {
+                    let field
+                    let message
+                    for (let error in data['errors']) {
+                        field = $form.find($(`[name='${data['errors'][error]['error_field']}']`))
+                        field.addClass('input--error')
+                        message = field.next()
+                        message.text(data['errors'][error]['msg']).addClass('span--error')
+                    }
+                    $('.modal__dialog').addClass('modal__dialog--error')
+                } else if (data['redirect']) {
+                    DeleteErrors()
+                    location.replace(data['redirect'])
+                } else if (data['passed']) {
+                    $('.modal').removeClass('modal--visible')
+                    DeleteErrors()
+                    MessageEvent(data['passed'])
+                }
+            },
+            error: function () {
+                MessageEvent({'msg': 'Ошибка сервера. Попробуйте попозже'})
+            }
+        })
+        return false
+    })
+    
 })
 
 function DeleteErrors(close_modal = false) {
@@ -189,3 +260,8 @@ function DeleteErrors(close_modal = false) {
         $('.modal').removeClass('modal--visible')
     }
 }
+
+function MessageEvent(event) {
+        $('.modal__message').addClass('modal--visible');
+        $('.text-message-modal').text(event['msg'])
+    }
