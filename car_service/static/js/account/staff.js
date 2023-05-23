@@ -141,12 +141,13 @@ function GetWorkingConditions(date) {
             $modal.addClass('modal--visible');
             $modal.find($('.modal__title')).text(`Условия работы ${date.slice(0,10)}`)
             if (data) {
+                console.log(data)
                 $modal.find($("[name='open_time']")).val(data['open'])
-                $modal.find($("[name='close_time']")).val(data['close']) 
+                $modal.find($("[name='close_time']")).val(data['close'])
                 $modal.find($("[name='discount']")).val(data['discount'])
             } else {
-                $modal.find($("[name='open_time']")).val('')
-                $modal.find($("[name='close_time']")).val('') 
+                $modal.find($("[name='open_time']")).val(none)
+                $modal.find($("[name='close_time']")).val(none)
                 $modal.find($("[name='discount']")).val(none)
             }
         },

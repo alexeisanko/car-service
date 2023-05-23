@@ -1,5 +1,5 @@
 from django.contrib import admin
-from event_calendar.models import Events, TypesOfServices, StatusServices, Discounts
+from event_calendar.models import Events, TypesOfServices, StatusServices, WorkingConditions
 
 
 class EventsAdmin(admin.ModelAdmin):
@@ -20,10 +20,10 @@ class TypesOfServicesAdmin(admin.ModelAdmin):
 
 
 class DiscountAdmin(admin.ModelAdmin):
-    list_display = ('date', 'size', 'is_active')
+    list_display = ('date', 'size_discount', 'open_work', 'close_work')
 
 
 admin.site.register(Events, EventsAdmin)
 admin.site.register(TypesOfServices, TypesOfServicesAdmin)
-admin.site.register(Discounts, DiscountAdmin)
+admin.site.register(WorkingConditions, DiscountAdmin)
 admin.site.register(StatusServices)

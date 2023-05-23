@@ -2,11 +2,13 @@ from django.http import JsonResponse
 from api.crud import get_status_car
 from django.views.decorators.http import require_POST, require_GET
 from api import utilities
+from api import crud
 from api.forms import ChangePersonalDataForm, AddCarForm, ChangeCarInfoForm, StatusCarForm
 from django.shortcuts import redirect
-from site_service.models import Lifts, Clients, Cars
-from event_calendar.models import Events, Discounts
+from site_service.models import Lifts, Clients, Cars, Workers
+from event_calendar.models import Events, WorkingConditions, StatusServices
 from account.models import MyUser
+import datetime
 
 
 @require_GET
@@ -66,14 +68,27 @@ def get_select_event(request):
 @require_POST
 def change_event(request):
     response = request.POST
-    
-    Events.objects.filter(id=response['event_id']).update(
-            date_begin=response['start_time_plan'],
-            date_finish_plan=response['end_time_plan'],
-            date_begin_fact=response['start_time_fact'],
-            date_finish_fact=response['end_time_fact'],
-            )
-    return JsonResponse({'passed': {'msg': 'Ура'}})
+    start_time_plan = (datetime.datetime.strptime(response['start_time_plan'], '%Y-%m-%dT%H:%M') - datetime.timedelta(hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z')
+    end_time_plan = (datetime.datetime.strptime(response['end_time_plan'], '%Y-%m-%dT%H:%M') - datetime.timedelta(hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z')
+    start_time_fact = (datetime.datetime.strptime(response['start_time_fact'], '%Y-%m-%dT%H:%M') - datetime.timedelta(hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z') if response['start_time_fact'] else None
+    end_time_fact = (datetime.datetime.strptime(response['end_time_fact'], '%Y-%m-%dT%H:%M') - datetime.timedelta(hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z') if response['end_time_fact'] else None
+    status = StatusServices.objects.get(name=response['status'])
+    worker = Workers.objects.get(name=response['worker']) if response['worker'] else None
+    lift = Events.objects.get(id=response['event_id']).lift_id
+    year, month, day = int(start_time_plan[0: 4]), int(start_time_plan[5: 7]), int(start_time_plan[8: 10])
+    is_free_lift = crud.is_free_lift(year, month, day, lift.id, start_time_plan, end_time_plan)
+    if is_free_lift:
+        Events.objects.filter(id=response['event_id']).update(
+            date_begin=start_time_plan,
+            date_finish_plan=end_time_plan,
+            date_begin_fact=start_time_fact,
+            date_finish_fact=end_time_fact,
+            status_id=status,
+            worker_id=worker
+        )
+        return JsonResponse({'passed': {'msg': 'Данные в записи изменены'}})
+    else:
+        return JsonResponse({'passed': {'msg': 'Ошибка! Плановое время, на которое выхотите изменить работу на данном подьемнике уже занято!'}})
 
 
 @require_GET
@@ -144,7 +159,9 @@ def delete_car(request):
 @require_GET
 def get_working_conditions(request):
     response = request.GET
-    conditions = Discounts.objects.filter(date=response['date'])
+    conditions = WorkingConditions.objects.filter(date=response['date'])
     if conditions:
-        return JsonResponse({'discount': conditions[0].size_discount})
+        return JsonResponse({'discount': conditions[0].size_discount,
+                             'open': conditions[0].open_work,
+                             'close': conditions[0].close_work})
     return JsonResponse({})

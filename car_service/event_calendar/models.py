@@ -1,17 +1,18 @@
 from django.db import models
 
 
-class Discounts(models.Model):
+class WorkingConditions(models.Model):
     date = models.DateField(verbose_name='Дата')
-    size = models.IntegerField(verbose_name='Размер скидки')
-    is_active = models.BooleanField(verbose_name='Скидка активна?')
+    size_discount = models.IntegerField(verbose_name='Размер скидки', null=True)
+    open_work = models.TimeField(verbose_name='Время открытия автосервиса', null=True)
+    close_work = models.TimeField(verbose_name='Время закрытия автосервиса', null=True)
 
     def __str__(self):
-        return f'{self.date} - {self.size} %'
+        return f'{self.date}'
 
     class Meta:
-        verbose_name = 'Скидка'
-        verbose_name_plural = 'Скидки'
+        verbose_name = 'Условие работы'
+        verbose_name_plural = 'Условия работы'
 
 
 class TypesOfServices(models.Model):

@@ -81,7 +81,7 @@ $(document).ready(function () {
                     message.text(`Incorrest type service.\nPlease take correct type service from list`).addClass('span--error')
                     return false
                 } else if (this.data[key] == false && key != 'comment') {
-                    field = $(`#{key}`)
+                    field = $(`#${key}`)
                     field.addClass('input--error')
                     message = field.next()
                     message.text(`Please fill in the field ${key}`).addClass('span--error')

@@ -53,7 +53,7 @@ def make_new_record(data):
     return True
 
 
-def _find_free_lift(start_time, end_time, type_service):
+def _find_free_lift(start_time, end_time, type_service, select_lift=None):
     lifts = crud.get_lifts(type_service)
     year, month, day = int(start_time[0: 4]), int(start_time[5: 7]), int(start_time[8: 10])
     for lift in lifts:
