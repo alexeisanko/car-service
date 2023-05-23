@@ -165,3 +165,11 @@ def get_working_conditions(request):
                              'open': conditions[0].open_work,
                              'close': conditions[0].close_work})
     return JsonResponse({})
+
+
+@require_GET
+def clean_working_conditions(request):
+    response = request.GET
+    conditions = WorkingConditions.objects.filter(date=response['date'])
+    conditions.delete()
+    return JsonResponse({'passed': {'msg': 'Информация удалена'}})

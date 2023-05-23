@@ -11,6 +11,7 @@ urlpatterns = [
     path('change_event/', views.change_event, name='change_event'),
     path('get_select_event/', views.get_select_event, name='get_select_event'),
     path('get_working_conditions/', views.get_working_conditions, name='get_working_conditions'),
+    path('clean_working_conditions/', views.clean_working_conditions, name='clean_working_conditions'),
     path('delete-event/', views.delete_event, name='delete_event'),
     path('change_personal_data', views.change_personal_data, name='change-personal-data'),
     path('add_car/', views.add_car, name='add_car'),

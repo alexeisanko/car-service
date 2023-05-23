@@ -211,6 +211,22 @@ $(document).ready(function () {
             },
         })
     })
+
+    $('#delete-conditions').click(function (e) {
+        e.preventDefault()
+        let $modal = $('.modal__change_work')
+        let date = $modal.find($('.modal__title')).text().slice(15, 25)
+        $.ajax({
+            type: 'GET',
+            url: '/api/clean_working_conditions/',
+            dataType: 'json',
+            data: {"date": date},
+            success: function (data) {
+                DeleteErrors(true)
+                MessageEvent({'msg': 'Условия работы удалены'})
+            },
+        })
+    })
     
     $('.modal').on("submit", "form", function (e) {
         e.preventDefault()
