@@ -3,7 +3,7 @@ from api.crud import get_status_car
 from django.views.decorators.http import require_POST, require_GET
 from api import utilities
 from api import crud
-from api.forms import ChangePersonalDataForm, AddCarForm, ChangeCarInfoForm, StatusCarForm
+from api.forms import ChangePersonalDataForm, AddCarForm, ChangeCarInfoForm, StatusCarForm, StaffMakeEventForm
 from django.shortcuts import redirect
 from site_service.models import Lifts, Clients, Cars, Workers
 from event_calendar.models import Events, WorkingConditions, StatusServices
@@ -27,12 +27,25 @@ def check_status_car(request):
         return JsonResponse({'errors': errors})
 
 
-@require_GET
 def make_recording(request):
-    response = request.GET
-    status = utilities.make_new_record(response)
-    if status:
-        return JsonResponse({'passed': {'request': 'make order', 'msg': 'Поздравляем с записью. Вся информация направлена на ваш электронный адрес'}})
+    if request.GET:
+        response = request.GET
+        status = utilities.make_new_record(response)
+        if status:
+            return JsonResponse({'passed': {'request': 'make order', 'msg': 'Поздравляем с записью. Вся информация направлена на ваш электронный адрес'}})
+    if request.POST:
+        form = StaffMakeEventForm(request.POST)
+        if form.is_valid():
+            status = utilities.make_new_record(form.cleaned_data, staff=True)
+            if status[0]:
+                return JsonResponse({'passed': {'msg': 'Запись создана'}})
+            else:
+                errors = [{'error_field': status[1], 'msg': status[2]}]
+                return JsonResponse({'errors': errors})
+        else:
+            errors = [{'error_field': x[0], 'msg': x[1][0]} for x in form.errors.items()]
+            return JsonResponse({'errors': errors})
+
 
 
 @require_GET

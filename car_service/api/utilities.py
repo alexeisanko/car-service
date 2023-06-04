@@ -1,3 +1,6 @@
+from site_service.models import Clients, Cars, Lifts, Workers
+from event_calendar.models import StatusServices, TypesOfServices, Events
+from django.core.exceptions import ObjectDoesNotExist
 from api import crud
 from datetime import datetime
 import datetime as dt
@@ -43,14 +46,54 @@ def get_free_times(year, month, day, lift_id, time_open, time_close):
     return free_times
 
 
-def make_new_record(data):
-    user_data = {'full_name': data['name'], 'phone': data['phone'], 'email': data['email']}
-    client = crud.get_or_create_user(user_data)
-    car_data = {'model': data['model'], 'registration_number': data['number_car'], 'client': client}
-    car = crud.get_or_create_car(car_data)
-    lift = _find_free_lift(data['start_time'], data['end_time'], data['service'])
-    new_record = crud.make_new_record(client, car, lift, data['start_time'], data['end_time'], data['service'])
-    return True
+def make_new_record(data, staff=False):
+    if staff:
+        try:
+            lift = Lifts.objects.get(name=data['lift'])
+        except ObjectDoesNotExist:
+            return False, 'lift', 'Выбран несуществующий подъемник'
+        start_time_plan = (data['start_time_plan'] - dt.timedelta(
+                hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z')
+        end_time_plan = (data['end_time_plan'] - dt.timedelta(
+            hours=3)).strftime('%Y-%m-%dT%H:%M:00.000Z')
+        year, month, day = int(start_time_plan[0: 4]), int(start_time_plan[5: 7]), int(start_time_plan[8: 10])
+        is_free_lift = crud.is_free_lift(year, month, day, lift.id, start_time_plan, end_time_plan)
+        if is_free_lift:
+            try:
+                client = Clients.objects.get(id=data['client'])
+            except ObjectDoesNotExist:
+                return False, 'client', 'Такой клиент отсутствует в базе'
+            try:
+                car = Cars.objects.get(id=data['car'])
+            except ObjectDoesNotExist:
+                return False, 'client', 'Такой машины нет в базе у клиента'
+            try:
+                service = TypesOfServices.objects.get(id=data['type_service'])
+            except ObjectDoesNotExist:
+                return False, 'type_service', 'Несуществующая работа'
+            status = StatusServices.objects.get(id=1)
+            worker = Workers.objects.get(name=data['worker']) if data['worker'] else None
+            Events.objects.create(
+                lift_id=lift,
+                date_begin=start_time_plan,
+                date_finish_plan=end_time_plan,
+                status_id=status,
+                worker_id=worker,
+                client_id=client,
+                car_id=car,
+                type_of_service_id=service
+            )
+            return True,
+        else:
+            return False, 'start_time_plan', 'Подьемник на это время занят'
+    else:
+        user_data = {'full_name': data['name'], 'phone': data['phone'], 'email': data['email']}
+        client = crud.get_or_create_user(user_data)
+        car_data = {'model': data['model'], 'registration_number': data['number_car'], 'client': client}
+        car = crud.get_or_create_car(car_data)
+        lift = _find_free_lift(data['start_time'], data['end_time'], data['service'])
+        new_record = crud.make_new_record(client, car, lift, data['start_time'], data['end_time'], data['service'])
+        return True
 
 
 def _find_free_lift(start_time, end_time, type_service, select_lift=None):

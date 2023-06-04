@@ -5,10 +5,11 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.core import serializers
 from account.forms import LoginForm, RegistrationForm
 from account import utilities
-from site_service.models import Lifts, Clients, Cars
-from event_calendar.models import Events
+from site_service.models import Lifts, Clients, Cars, Workers
+from event_calendar.models import Events, StatusServices, TypesOfServices
 
 
 class StaffPageView(LoginRequiredMixin, TemplateView):
@@ -17,6 +18,14 @@ class StaffPageView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['lifts'] = Lifts.objects.all()
+        context['workers'] = Workers.objects.all()
+        context['cars'] = Cars.objects.all()
+        context['clients'] = Clients.objects.all()
+        context['statuses'] = StatusServices.objects.all()
+        context['services'] = TypesOfServices.objects.all()
+        context['cars_json'] = serializers.serialize('json', Cars.objects.all())
+        context['clients_json'] = serializers.serialize('json', Clients.objects.all())
+        context['services_json'] = serializers.serialize('json', TypesOfServices.objects.all())
         return context
 
 

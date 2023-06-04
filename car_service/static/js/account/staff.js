@@ -90,13 +90,30 @@ function RenderCalendar(calendarEl, events) {
             GetEvent(info.event.extendedProps.id_event)
         },
         dateClick: function (info) {
-            alert('Окно для создания записи на: ' + info.dateStr)
+            MakeNewEvent(info.dateStr)
         },
         navLinkDayClick: function (date) {
             GetWorkingConditions(date.toISOString())
         }
     });
     calendar.render();
+}
+
+function MakeNewEvent(date) {
+    let $modal = $('.modal__new-event')
+        $('.type_service').val(null)
+        $('.select_client').val(null)
+        $('.select_car').val(null)
+        $('.name_client').text(null)
+        $('.phone_client').text(null)
+        $('.email_client').text(null)
+        $('.name_service').text(null)
+        $('.time_working').text(null)
+        $('.cost_work').text(null)
+        $('.model_car').text(null)
+        $('.number_car').text(null)
+        $('.vin_car').text(null)
+        $modal.addClass('modal--visible');
 }
 
 function GetEvent(id_event) {
@@ -123,6 +140,7 @@ function GetEvent(id_event) {
             }
             $modal.find($("[name='status']")).val(data['status_service'])
             $modal.find($("[name='worker']")).val(data['worker'])
+            $modal.find($("[name='event_id']")).val(id_event)
             $modal.attr('data', id_event)
         },
     })
@@ -153,6 +171,20 @@ function GetWorkingConditions(date) {
         },
     })
 }
+
+function DeleteErrors(close_modal = false) {
+    $(':input').removeClass('input--error')
+    $('.error-message').text("").removeClass('span--error')
+    $('.modal__dialog').removeClass('modal__dialog--error')
+    if (close_modal) {
+        $('.modal').removeClass('modal--visible')
+    }
+}
+
+function MessageEvent(event) {
+        $('.modal__message').addClass('modal--visible');
+        $('.text-message-modal').text(event['msg'])
+    }
 
 $(document).ready(function () {
     $('.lift').on('click', 'a', function () {
@@ -227,19 +259,16 @@ $(document).ready(function () {
             },
         })
     })
-    
+
     $('.modal').on("submit", "form", function (e) {
         e.preventDefault()
         DeleteErrors()
         let $form = $(this);
-        let data_form = $form.serialize()
-        data_form = data_form + `&event_id=${$('.modal__change-event').attr('data')}`
-        console.log(data_form)
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
             dataType: 'json',
-            data: data_form,
+            data: $form.serialize(),
             success: function (data) {
                 if (data['errors']) {
                     let field
@@ -266,19 +295,53 @@ $(document).ready(function () {
         })
         return false
     })
-    
+
+    $('.type_service').on("input", function () {
+        let select_service = $(this).val()
+        for ( let service of services) {
+            if (service['pk'] == select_service) {
+                $('.name_service').text(service['fields']['name'])
+                $('.time_working').text(`Время выполнения: ${service['fields']['fixed_repair_time']} мин.`)
+                if (service['fields']['is_fixed_price']) {
+                    $('.cost_work').text(`Цена: ${service['fields']['price']} руб`)
+                } else {
+                    $('.cost_work').text(`Цена: от ${service['fields']['price']} руб`)
+                }
+                break
+            }
+            $('.name_service').text(null)
+            $('.time_working').text(null)
+            $('.cost_work').text(null)
+        }
+    })
+
+    $('.select_client').on("input", function () {
+        let select_client = $(this).val()
+        for (let client of clients) {
+            if (client['pk'] == select_client) {
+                $('.name_client').text(client['fields']['full_name'])
+                $('.phone_client').text(client['fields']['phone'])
+                $('.email_client').text(client['fields']['email'])
+                break
+            }
+            $('.name_client').text(null)
+            $('.phone_client').text(null)
+            $('.email_client').text(null)
+        }
+    })
+
+    $('.select_car').on("input", function () {
+        let select_car = $(this).val()
+        for (let car of cars) {
+            if (car['pk'] == select_car) {
+                $('.model_car').text(car['fields']['model'])
+                $('.number_car').text(car['fields']['registration_number'])
+                $('.vin_car').text(car['fields']['vin_number'])
+                break
+            }
+            $('.model_car').text(null)
+            $('.number_car').text(null)
+            $('.vin_car').text(null)
+        }
+    })
 })
-
-function DeleteErrors(close_modal = false) {
-    $(':input').removeClass('input--error')
-    $('.error-message').text("").removeClass('span--error')
-    $('.modal__dialog').removeClass('modal__dialog--error')
-    if (close_modal) {
-        $('.modal').removeClass('modal--visible')
-    }
-}
-
-function MessageEvent(event) {
-        $('.modal__message').addClass('modal--visible');
-        $('.text-message-modal').text(event['msg'])
-    }

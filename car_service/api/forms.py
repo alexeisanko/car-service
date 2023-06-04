@@ -1,6 +1,17 @@
 from django import forms
 
 
+class StaffMakeEventForm(forms.Form):
+    client = forms.IntegerField(required=True)
+    lift = forms.CharField(required=True)
+    car = forms.IntegerField(required=True)
+    type_service = forms.IntegerField(required=True)
+    start_time_plan = forms.DateTimeField(required=True)
+    end_time_plan = forms.DateTimeField(required=True)
+    worker = forms.CharField(required=False)
+    note = forms.CharField(required=False)
+
+
 class ChangePersonalDataForm(forms.Form):
     email = forms.EmailField(required=False)
     full_name = forms.CharField(required=False)

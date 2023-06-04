@@ -16,6 +16,74 @@
 {% endblock style %}
 
 {% block content %}
+    <div class="modal modal__new-event">
+        <div class="modal__dialog modal__dialog--super">
+            <button class="modal__close"></button>
+            <h3 class="modal__title">Создать событие</h3>
+            <form method="POST" action="{% url 'api:make_recording' %}" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+                <p>Работа</p>
+                <div class="modal__block">
+                    <div class="input-group modal__input-group">
+                        <input list="list-lifts" class="input form__input modal__input input--light staff-info-input" name="lift" placeholder="Выберите подъемник">
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="input-group modal__input-group">
+                        <input list="list-type-service" class="input form__input modal__input input--light staff-info-input type_service" name="type_service" placeholder="Выберите работу">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <p class="modal-title name_service"></p>
+                <div class="modal__block">
+                    <p class="input-group__text time_working"></p>
+                    <p class="input-group__text cost_work"></p>
+                </div>
+                <p>Клиент</p>
+                <div class="modal__block">
+                    <div class="input-group modal__input-group">
+                    <input list="list-clients" class="input form__input modal__input input--light staff-info-input select_client" name="client" placeholder="Выберите клиента">
+                    <span class="error-message"></span>
+                </div>
+                    <div class="input-group modal__input-group">
+                    <input list="list-cars" class="input form__input modal__input input--light staff-info-input select_car" name="car" placeholder="Выберите машину">
+                    <span class="error-message"></span>
+                </div>
+                </div>
+                <p class="modal-title name_client"></p>
+                <div class="modal__block">
+                    <p class="input-group__text phone_client"></p>
+                    <p class="input-group__text email_client"></p>
+                </div>
+                <p class="modal-title model_car"></p>
+                <div class="modal__block">
+                    <p class="input-group__text number_car" ></p>
+                    <p class="input-group__text vin_car" ></p>
+                </div>
+                <p class="modal-title">Время работы по записи</p>
+                <div class="modal__block plan-time">
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input  form__input modal__input input--light staff-date-input" name="start_time_plan" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="input-group modal__input-group">
+                        <input type="datetime-local" class="input form__input modal__input input--light staff-date-input" name="end_time_plan" placeholder="">
+                        <span class="error-message"></span>
+                    </div>
+                </div>
+                <p class="modal-title">Ответственный</p>
+                <div class="input-group modal__input-group">
+                    <input list="list-workers" class="input form__input modal__input input--light staff-info-input" name="worker" placeholder="Ответственный за ремонт">
+                    <span class="error-message"></span>
+                </div>
+                <div class="input-group modal__input-group">
+                    <textarea type="text" rows="6" cols="35" class="input form__input modal__input input--light staff-info-input" name="Note" placeholder="Примечание"></textarea>
+                    <span class="error-message"></span>
+                </div>
+                <div style="display: flex">
+                    <button id="make-new-event" class="button btn--dark btn button--primary modal__button update-event">Создать запись</button></div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal modal__change-event">
         <div class="modal__dialog modal__dialog--super">
             <button class="modal__close"></button>
@@ -61,18 +129,19 @@
                 </div>
                 <p class="modal-title">Статус</p>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light staff-info-input" name="status" placeholder="Введите статус ремонта">
+                    <input list="list-statuses" class="input form__input modal__input input--light staff-info-input" name="status" placeholder="Введите статус ремонта">
                     <span class="error-message"></span>
                 </div>
                 <p class="modal-title">Ответственный</p>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light staff-info-input" name="worker" placeholder="Ответственный за ремонт">
+                    <input list="list-workers" class="input form__input modal__input input--light staff-info-input" name="worker" placeholder="Ответственный за ремонт">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
                     <textarea type="text" rows="6" cols="35" class="input form__input modal__input input--light staff-info-input" name="Note" placeholder="Примечание"></textarea>
                     <span class="error-message"></span>
                 </div>
+                <input type="hidden" name="event_id">
                 <div style="display: flex">
                     <button id="delete-event" class="button btn--dark btn button--primary modal__button" style="background-color: #ff849c">Удалить</button>
                     <button id="update-event" class="button btn--dark btn button--primary modal__button update-event">Обновить</button></div>
@@ -236,6 +305,42 @@
             </div>
         </section>
     </div>
+
+    <datalist id="list-lifts">
+        {% for lift in lifts %}
+            <option value="{{ lift.name }}">{{ lift.name }}</option>
+        {% endfor %}
+    </datalist>
+    <datalist id="list-type-service">
+        {% for service in services %}
+            <option value="{{ service.id }}">{{ service.name }}</option>
+        {% endfor %}
+    </datalist>
+    <datalist id="list-workers">
+        {% for worker in workers %}
+            <option value="{{ worker.name }}">{{ worker.name }}</option>
+        {% endfor %}
+    </datalist>
+    <datalist id="list-clients">
+        {% for client in clients %}
+            <option value="{{ client.id }}">{{ client.full_name }} ({{ client.phone }})</option>
+        {% endfor %}
+    </datalist>
+    <datalist id="list-cars">
+        {% for car in cars %}
+            <option value="{{ car.id }}">{{ car.model }} ({{ car.registration_number }})</option>
+        {% endfor %}
+    </datalist>
+    <datalist id="list-statuses">
+        {% for status in statuses %}
+            <option value="{{ status.name }}">{{ status.name }}</option>
+        {% endfor %}
+    </datalist>
+    <script>
+        let clients = JSON.parse('{{ clients_json|escapejs }}')
+        let cars = JSON.parse('{{ cars_json|escapejs }}')
+        let services = JSON.parse('{{ services_json|escapejs }}')
+    </script>
 {% endblock content %}
 
 {% block script %}

@@ -70,7 +70,7 @@
                             <a href="/admin"><span>Управление</span> <img src="{% static 'img/header/login.svg' %}"
                                                                           alt="->"></a>
                         </div>
-                    {% elif user.is_staff %}
+                    {% elif user.is_admin %}
                         <div class="header__auth--good">
                             <a href="{% url 'account:staff' %}"><span>Администратор</span> <img
                                     src="{% static 'img/header/login.svg' %}" alt="->"></a>
