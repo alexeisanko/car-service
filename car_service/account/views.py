@@ -9,6 +9,7 @@ from django.core import serializers
 from account.forms import LoginForm, RegistrationForm
 from account import utilities
 from site_service.models import Lifts, Clients, Cars, Workers
+from customization.models import Header
 from event_calendar.models import Events, StatusServices, TypesOfServices
 
 
@@ -26,6 +27,7 @@ class StaffPageView(LoginRequiredMixin, TemplateView):
         context['cars_json'] = serializers.serialize('json', Cars.objects.all())
         context['clients_json'] = serializers.serialize('json', Clients.objects.all())
         context['services_json'] = serializers.serialize('json', TypesOfServices.objects.all())
+        context['headers'] = Header.objects.first()
         return context
 
 

@@ -86,7 +86,7 @@ $(document).ready(function () {
                     message = field.next()
                     message.text(`Please fill in the field ${key}`).addClass('span--error')
                     return false
-                } else if (key === 'phone' && this.data[key].length != 20) {
+                } else if (key === 'phone' && this.data[key].length != 18) {
                     field = $('#phone')
                     field.addClass('input--error')
                     message = field.next()

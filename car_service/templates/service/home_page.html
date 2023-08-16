@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Главная страница{%  endblock title %}
+{% block title %}Главная страница{% endblock title %}
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/home-page.css' %}">
@@ -11,56 +11,70 @@
 
 {% block content %}
     <div class="modal modal__login">
-        <div class="modal__dialog"><button class="modal__close"></button>
+        <div class="modal__dialog">
+            <button class="modal__close"></button>
             <h3 class="modal__title">Авторизация</h3>
-            <form action="{% url "account:login" %}" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+            <form action="{% url "account:login" %}" method="POST" class="form modal__form"
+                  novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
+                    <input type="text" class="input form__input modal__input input--light"
+                           placeholder="Электронная почта" name="email">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">
+                    <input type="password" class="input form__input modal__input input--light"
+                           placeholder="Введите пароль" name="password">
                     <span class="error-message"></span>
                 </div>
                 <p class="input-reg">Еще не с нами? <span class="input-reg-link">Зарегистрируйтесь</span></p>
-                <button class="button btn--dark btn button--primary modal__button">Войти</button></form>
+                <button class="button btn--dark btn button--primary modal__button">Войти</button>
+            </form>
         </div>
     </div>
 
     <div class="modal modal__registration">
-        <div class="modal__dialog"><button class="modal__close"></button>
+        <div class="modal__dialog">
+            <button class="modal__close"></button>
             <h3 class="modal__title">Регистрация</h3>
-            <form action="/account/register/" method="POST" class="form modal__form" novalidate="novalidate">{% csrf_token %}
+            <form action="/account/register/" method="POST" class="form modal__form"
+                  novalidate="novalidate">{% csrf_token %}
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Электронная почта" name="email">
+                    <input type="text" class="input form__input modal__input input--light"
+                           placeholder="Электронная почта" name="email">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light" placeholder="Ваше имя" name="full_name">
+                    <input type="text" class="input form__input modal__input input--light" placeholder="Ваше имя"
+                           name="full_name">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="text" class="input form__input modal__input input--light mask-number-phone" placeholder="Номер телефона" name="phone" >
+                    <input type="text" class="input form__input modal__input input--light mask-number-phone"
+                           placeholder="Номер телефона" name="phone">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="password" class="input form__input modal__input input--light" placeholder="Введите пароль" name="password">
+                    <input type="password" class="input form__input modal__input input--light"
+                           placeholder="Введите пароль" name="password">
                     <span class="error-message"></span>
                 </div>
                 <div class="input-group modal__input-group">
-                    <input type="password" class="input form__input modal__input input--light" placeholder="Повторите пароль" name="password2">
+                    <input type="password" class="input form__input modal__input input--light"
+                           placeholder="Повторите пароль" name="password2">
                     <span class="error-message"></span>
                 </div>
                 <p class="input-reg">Уже есть аккаунт? <span class="input-login-link">Войти</span></p>
-                <button class="button btn--dark btn button--primary modal__button">Зарегистрироваться</button></form>
+                <button class="button btn--dark btn button--primary modal__button">Зарегистрироваться</button>
+            </form>
         </div>
 
     </div>
 
     <div class="modal modal__message">
-        <div class="modal__dialog"><button class="modal__close"></button>
+        <div class="modal__dialog">
+            <button class="modal__close"></button>
             <h3 class="modal__title">Информация</h3>
-                <p class="text-message-modal input-reg"></p>
+            <p class="text-message-modal input-reg"></p>
         </div>
     </div>
 
@@ -68,11 +82,18 @@
         <div class="container">
             <div class="hero__info">
                 <h1 class="hero__title title">Уход за автомобилем: <span class="blue title">быстро и честно</span></h1>
-                <p class="hero__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-                    sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                <p class="hero__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit
+                    officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet
+                    minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                    sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud
+                    amet.</p>
                 <div class="hero__links">
-                    <a href="#entry-scroll"><div class="btn"> Оставить заявку</div></a>
-                    <a href="#step-scroll"><div class="btn btn--dark">Проверить статус</div></a>
+                    <a href="#entry-scroll">
+                        <div class="btn"> Оставить заявку</div>
+                    </a>
+                    <a href="#step-scroll">
+                        <div class="btn btn--dark">Проверить статус</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -85,25 +106,34 @@
                 <div class="step__stages stages">
                     <div class="stages__step">
                         <div class="step__num">01</div>
-                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit mollit.
+                        </div>
                     </div>
                     <div class="stages__step">
                         <div class="step__num">02</div>
-                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit mollit.
+                        </div>
                     </div>
                     <div class="stages__step">
                         <div class="step__num">03</div>
-                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit mollit.
+                        </div>
                     </div>
                     <div class="stages__step">
                         <div class="step__num">04</div>
-                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. </div>
+                        <div class="step__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit mollit.
+                        </div>
                     </div>
                 </div>
                 <div class="step__status status" id="status-scroll">
                     <form action="{% url 'api:check_status' %}" method="GET" class="status__form">
                         <div class="status__title title">Введите номер машины</div>
-                        <input type="text" class="status__number mask-number-car" placeholder="х999х11", name="registration_number">
+                        <input type="text" class="status__number mask-number-car" placeholder="х999х11" ,
+                               name="registration_number">
                         <input type="submit" value="Проверить статус" class="btn btn--dark status__check">
                     </form>
                 </div>
@@ -119,20 +149,24 @@
                 <div class="advantages__item">
                     <img src="{% static 'img/advantages/advantages-1.svg' %}" alt="Ремонт" class="advantages__img">
                     <p class="advantages__title block-title">Ремонт в День обращения</p>
-                    <p class="advantages__text">Мы готовы принять в ремонт любой автомобиль в день обращения при наличии всех запасных частей и отремонтировать в кратчайшие сроки.</p>
+                    <p class="advantages__text">Мы готовы принять в ремонт любой автомобиль в день обращения при наличии
+                        всех запасных частей и отремонтировать в кратчайшие сроки.</p>
                 </div>
                 <div class="advantages__item">
                     <img src="{% static 'img/advantages/advantages-2.svg' %}" alt="Ремонт" class="advantages__img">
                     <p class="advantages__title block-title">Ремонт автомобилей всех марок</p>
-                    <p class="advantages__text">Мы починим автомобиль любой марки, включая и негабаритные автомобили, такие как лимузины, автобусы и микроавтобусы.</p>
+                    <p class="advantages__text">Мы починим автомобиль любой марки, включая и негабаритные автомобили,
+                        такие как лимузины, автобусы и микроавтобусы.</p>
                 </div>
                 <div class="advantages__item">
                     <img src="{% static 'img/advantages/advantages-3.svg' %}" alt="Мастера" class="advantages__img">
                     <p class="advantages__title block-title">Высокая квалификация мастеров</p>
-                    <p class="advantages__text">Ваш автомобиль будет в руках профессионалов, опыт которых не менее 5 лет</p>
+                    <p class="advantages__text">Ваш автомобиль будет в руках профессионалов, опыт которых не менее 5
+                        лет</p>
                 </div>
                 <div class="advantages__item">
-                    <img src="{% static 'img/advantages/advantages-4.svg' %}" alt="Оборудование" class="advantages__img">
+                    <img src="{% static 'img/advantages/advantages-4.svg' %}" alt="Оборудование"
+                         class="advantages__img">
                     <p class="advantages__title block-title">Оборудование нового поколения</p>
                     <p class="advantages__text">Мы используем новейшее оборудование, прошедшее проверку качества</p>
                 </div>
@@ -149,12 +183,15 @@
                     <div class="services__desc"></div>
                     <div class="services__price">
                         <span class="services__cost"></span>
-                        <a href="#entry-scroll"><div class="btn btn--dark">Записаться</div></a>
+                        <a href="#entry-scroll">
+                            <div class="btn btn--dark">Записаться</div>
+                        </a>
                     </div>
                 </div>
                 <div class="services__service">
                     {% for service_id in custom_services_id %}
-                    <div id="custom_service_id{{ service_id.id }}" class="services__icon"><img src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
+                        <div id="custom_service_id{{ service_id.id }}" class="services__icon"><img
+                                src="{% static 'img/services/icon.svg' %}" alt="icon"></div>
                     {% endfor %}
                 </div>
             </div>
@@ -168,16 +205,16 @@
                 {% for worker in team %}
                     {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 or forloop.counter == 7 or forloop.counter == 9 %}
                         <div class="team__slide slide">
-                    <img src="{{ worker.photo.url }}" alt="" class="slide__img">
-                    <p class="slide__title block-title">{{ worker.name }}</p>
-                    <p class="slide__text">{{ worker.description }}</p>
-                </div>
+                            <img src="{{ worker.photo.url }}" alt="" class="slide__img">
+                            <p class="slide__title block-title">{{ worker.name }}</p>
+                            <p class="slide__text">{{ worker.description }}</p>
+                        </div>
                     {% else %}
                         <div class="team__slide slide slide--dark">
-                    <img src="{{ worker.photo.url }}" alt="" class="slide__img">
-                    <p class="slide__title block-title">{{ worker.name }}</p>
-                    <p class="slide__text">{{ worker.description }}</p>
-                </div>
+                            <img src="{{ worker.photo.url }}" alt="" class="slide__img">
+                            <p class="slide__title block-title">{{ worker.name }}</p>
+                            <p class="slide__text">{{ worker.description }}</p>
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -192,14 +229,18 @@
                     <div class="calendar__select">
 
                         <div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start">
-                            <div style="margin-right: 40px">
-                                <h2 style="margin-bottom: 15px; text-align: center; font-size: 18px">Тип автомобиля</h2>
-                                <label class="form-switch">
-                                <input id="checked-type-car" type="checkbox">
-                                <i></i> <span id="select-type-car">Легковой</span></label>
-                            </div>
+                            {% if lifts_for_minibus and type_service_minibus %}
+                                <div style="margin-right: 40px">
+                                    <h2 style="margin-bottom: 15px; text-align: center; font-size: 18px">Тип
+                                        автомобиля</h2>
+                                    <label class="form-switch">
+                                        <input id="checked-type-car" type="checkbox">
+                                        <i></i> <span id="select-type-car">Легковой</span></label>
+                                </div>
+                            {% endif %}
                             <div>
-                                <input id="select-service" list="service-car" placeholder="Выберите услугу" style="margin-top: 12px">
+                                <input id="select-service" list="service-car" placeholder="Выберите услугу"
+                                       style="margin-top: 12px">
                                 <span class="error-message"></span>
                                 <datalist id="service-car">
                                     {% for type in type_service_car %}
@@ -220,7 +261,8 @@
                         <form action="{% url 'api:make_recording' %}" method="POST">
                             <input id="name" type="text" placeholder="Введите ФИО">
                             <span class="error-message"></span>
-                            <input id="phone" class="mask-number-phone" type="text" placeholder="Введите номер телефона">
+                            <input id="phone" class="mask-number-phone" type="text"
+                                   placeholder="Введите номер телефона">
                             <span class="error-message"></span>
                             <input id="email" type="text" placeholder="Введите Email">
                             <span class="error-message"></span>
@@ -249,28 +291,28 @@
                 {% for review in reviews %}
                     {% if forloop.counter == 1 or forloop.counter == 3 or forloop.counter == 5 or forloop.counter == 7 or forloop.counter == 9 %}
                         <div class="rewievs__slide slide slide--dark">
-                    <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
-                    <div class="slide__people">
-                        <img src="{{ review.photo.url }}" alt="people" class="slide__img">
-                        <div class="slide__info">
-                            <p class="slide__name">{{ review.name }}</p>
-                            <span class="slide__service">{{ review.type_service }}</span>
+                            <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
+                            <div class="slide__people">
+                                <img src="{{ review.photo.url }}" alt="people" class="slide__img">
+                                <div class="slide__info">
+                                    <p class="slide__name">{{ review.name }}</p>
+                                    <span class="slide__service">{{ review.type_service }}</span>
+                                </div>
+                            </div>
+                            <div class="slide__text">{{ review.description }}</div>
                         </div>
-                    </div>
-                    <div class="slide__text">{{ review.description }}</div>
-                </div>
                     {% else %}
                         <div class="rewievs__slide slide">
-                    <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
-                    <div class="slide__people">
-                        <img src="{{ review.photo.url }}" alt="people" class="slide__img">
-                        <div class="slide__info">
-                            <p class="slide__name">{{ review.name }}</p>
-                            <span class="slide__service">{{ review.type_service }}</span>
+                            <img src="{% static 'img/rewievs/tires.png' %}" alt="tires" class="rewievs__img_1">
+                            <div class="slide__people">
+                                <img src="{{ review.photo.url }}" alt="people" class="slide__img">
+                                <div class="slide__info">
+                                    <p class="slide__name">{{ review.name }}</p>
+                                    <span class="slide__service">{{ review.type_service }}</span>
+                                </div>
+                            </div>
+                            <div class="slide__text">{{ review.description }}</div>
                         </div>
-                    </div>
-                    <div class="slide__text">{{ review.description }}</div>
-                </div>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -291,7 +333,8 @@
             </div>
             <div class="place__card">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.8346373590214!2d24.900883677436564!3d60.299263233007835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x468df828d53383ff%3A0x48301afb28595770!2zTnVvbGl0aWUgMiwgMDE3NDAgVmFudGFhLCDQpNC40L3Qu9GP0L3QtNC40Y8!5e0!3m2!1sru!2sru!4v1681368241119!5m2!1sru!2sru"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
@@ -323,4 +366,4 @@
     <script src="{% static 'js/home_page_api.js' %}"></script>
     <script src="{% static 'js/calendar_client.js' %}"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-{%  endblock script %}
+{% endblock script %}
