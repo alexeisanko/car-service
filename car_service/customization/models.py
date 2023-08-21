@@ -3,14 +3,15 @@ from django.db import models
 
 class Header(models.Model):
     logo = models.ImageField(verbose_name='логотип', upload_to='header')
+    logo_text_first = models.CharField(verbose_name='Первый заголовок логотипа', max_length=30)
+    logo_text_second = models.CharField(verbose_name='Второй заголовок логотипа', max_length=30)
     first_header = models.CharField(verbose_name='Первый заголовок', max_length=30)
     second_header = models.CharField(verbose_name='Второй заголовок', max_length=20)
-    description = models.TextField(verbose_name='Описание услуги')
-    min_price = models.IntegerField(verbose_name='Минимальная цена')
+    description = models.TextField(verbose_name='Описание')
 
     class Meta:
-        verbose_name = 'Предоставляемая услуга'
-        verbose_name_plural = "Предоставляемые услуги"
+        verbose_name = 'Логотип и первоначальная информация'
+        verbose_name_plural = "Логотип и первоначальная информация"
 
 
 class DescriptionOfServices(models.Model):

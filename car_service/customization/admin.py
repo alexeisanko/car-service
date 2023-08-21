@@ -15,7 +15,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 class HeaderAdmin(admin.ModelAdmin):
-    list_display = ('logo', 'first_header', 'second_header', 'description')
+    list_display = ('logo', 'logo_text_first', 'logo_text_second', 'first_header', 'second_header', 'description')
 
 
 admin.site.register(Header, HeaderAdmin)

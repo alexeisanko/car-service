@@ -81,12 +81,10 @@
     <section class="hero">
         <div class="container">
             <div class="hero__info">
-                <h1 class="hero__title title">Уход за автомобилем: <span class="blue title">быстро и честно</span></h1>
-                <p class="hero__text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-                    officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet
-                    minim mollit non deserunt ullamco est sit aliqua dolor do amet
-                    sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud
-                    amet.</p>
+                <h1 class="hero__title title">{{ headers.first_header|default_if_none:"Уход за автомобилем: "}}<span class="blue title">{{ headers.second_header|default_if_none:"быстро и честно"}}</span></h1>
+                <p class="hero__text">{{ headers.description|default_if_none:"Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit moll. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+                            sint. Velit officia consequat duis enim velit moll."}}</p>
                 <div class="hero__links">
                     <a href="#entry-scroll">
                         <div class="btn"> Оставить заявку</div>
@@ -173,6 +171,7 @@
             </div>
         </div>
     </section>
+    {% if custom_services_id %}
     <section class="services" id="list-services-scroll">
         <div class="container">
             <h3 class="subtitle">Предоставляемые услуги</h3>
@@ -197,6 +196,8 @@
             </div>
         </div>
     </section>
+    {% endif %}
+    {% if team %}
     <section class="team" id="team-scroll">
         <div class="container">
             <h3 class="subtitle">Наша команда</h3>
@@ -220,6 +221,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
     <section class="entry" id="entry-scroll">
         <div class="container">
             <h3 class="subtitle">Запись в автосервис</h3>
@@ -282,6 +284,7 @@
             </div>
         </div>
     </section>
+    {% if reviews %}
     <section class="rewievs" id="rewievs-scroll">
         <div class="container">
             <h3 class="subtitle">Отзывы</h3>
@@ -319,6 +322,7 @@
 
         </div>
     </section>
+    {% endif %}
     <section class="place">
         <div class="container">
             <div class="place__info">

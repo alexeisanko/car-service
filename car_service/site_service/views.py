@@ -18,6 +18,14 @@ class HomePageView(TemplateView):
         context['custom_services_id'] = DescriptionOfServices.objects.all().values('id').order_by('id')
         context['reviews'] = Reviews.objects.all()
         context['team'] = Team.objects.all()
-        context['headers'] = Header.objects.first()
+
+        context['headers'] = Header.objects.last() if Header.objects.count() > 0 else {'logo': None,
+                                                                                       'logo_text_first': None,
+                                                                                       'logo_text_second': None,
+                                                                                       'first_header': None,
+                                                                                       'second_header': None,
+                                                                                       'description': None
+                                                                                       }
+
         return context
 # Create your views here.

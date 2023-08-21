@@ -23,10 +23,11 @@
             <div class="header__info">
                 <a href="{% url 'home_page' %}">
                     <div class="header__logo">
-                        <img src="{% static 'img/menu/logo.svg' %}" alt="ART-KAT">
+
+                        <img src="{{ headers.logo.url }}" alt="ART-KAT">
                         <div class="header__text">
-                            <p class="header__name">ART-KAT</p>
-                            <p class="header__desc">AUTOHUOLTO</p>
+                            <p class="header__name">{{ headers.logo_text_first|default_if_none:"ART-KAT"}}</p>
+                            <p class="header__desc">{{ headers.logo_text_second|default_if_none:"ART-KAT"}}</p>
                         </div>
                     </div>
                 </a>
@@ -65,12 +66,13 @@
                     </li>
                 </ul>
                 {% block account-login %}
-                    {% if user.is_superuser %}
+
+                    {% if user.is_admin %}
                         <div class="header__auth--good">
                             <a href="/admin"><span>Управление</span> <img src="{% static 'img/header/login.svg' %}"
                                                                           alt="->"></a>
                         </div>
-                    {% elif user.is_admin %}
+                    {% elif user.is_staff %}
                         <div class="header__auth--good">
                             <a href="{% url 'account:staff' %}"><span>Администратор</span> <img
                                     src="{% static 'img/header/login.svg' %}" alt="->"></a>
